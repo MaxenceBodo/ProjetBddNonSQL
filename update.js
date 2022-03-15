@@ -1,3 +1,18 @@
+const { MongoClient, ObjectId } = require("mongodb");
+const uri = "mongodb://localhost"
+const client = new MongoClient(uri);
+
+async function Updates(){
+    try {
+       await client.connect();
+       await CRUDupdate(client, {type:"Peugeot"}, {type:"Peugeooot"},"Vehicule");
+    } catch (error) {
+        console.log(error);
+    }finally{
+        client.close();
+    }
+}
+
 //Fonction d'update
 // parametre =>
 //  Client : instance de connection a la bdd
@@ -7,6 +22,6 @@
 async function CRUDupdate(client, filtre, newData, collection) {
     const result = await client.db("location").collection(collection)
                         .updateOne({ filtre }, { $set: newData });
-    console.log(`${result.matchedCount} document(s) matched the query criteria.`);
-    console.log(`${result.modifiedCount} document(s) was/were updated.`);
+    console.log(`${result.matchedCount} le document a ete trouve`);
+    console.log(`${result.modifiedCount} le document a ete modifie`);
 }

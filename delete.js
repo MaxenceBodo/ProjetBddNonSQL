@@ -1,3 +1,18 @@
+const { MongoClient, ObjectId } = require("mongodb");
+const uri = "mongodb://localhost"
+const client = new MongoClient(uri);
+
+async function Delete() {
+    try {
+        client.connect();
+        await CRUDdelete(client, {name:"peugeot"},"Vehicule");
+    } catch (error) {
+        console.log(error)
+    }finally{
+        client.close()
+    }
+}
+
 // fonction delete
 //  Client : instance de connection a la bdd
 //  filtre : filtre a utiliser sous la forme cle:valeur
