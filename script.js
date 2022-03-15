@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 
 async function main() {
-    const uri = "mongodb+srv://<username>:<password>@<your-cluster-url>/location";
+    const uri = "mongodb://localhost:21017";
 
     const client = new MongoClient(uri);
 
@@ -10,9 +10,7 @@ async function main() {
         await client.connect();
 
         //données
-        const societe = [
-            {}
-        ]
+
 
         // Appel à la BDD
 
