@@ -6,7 +6,7 @@ async function main() {
     const client = new MongoClient(uri);
 
     try {
-        // Connexion à mongoDB
+        // Connexion à mongoDBe
         await client.connect();
 
         //données
