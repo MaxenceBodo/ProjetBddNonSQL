@@ -1,3 +1,24 @@
+const { MongoClient, ObjectId } = require("mongodb");
+const uri = "mongodb://localhost"
+const client = new MongoClient(uri);
+
+
+async function Inserer(){
+    try {
+        await client.connect();
+        await CRUDcreate(client,{
+
+        },"Vehicule")
+
+    } catch (error) {
+        console.error(error);
+    }
+    finally{
+        client.close();
+    }
+}
+
+
 //Fonction d ajout
 // parametre => 
 //  client : instance de connection a la bdd
