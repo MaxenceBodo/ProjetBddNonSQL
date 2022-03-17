@@ -3,10 +3,13 @@ const contrat = db.collection("contratLocation");
 
 const pipeline = [
     {
-        $group:
+        $match:
         {
-            $count:"facturation"
+            dateDebut:{$lte : }
         }
+    },
+    {
+        $count:"facturation"
     }
     
 ]
