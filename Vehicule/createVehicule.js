@@ -6,5 +6,9 @@ async function main(){
     try{
         await client.connect();
         await CRUDcreate
+    }catch(error){
+        console.log(error);
+    }finally{
+        client.close();
     }
 }
