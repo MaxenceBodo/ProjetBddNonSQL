@@ -18,7 +18,7 @@ insert().catch(console.dir);
 
 
 async function insertPersonnesPhysiques(client) {
-    await createManyPersonnesPhysiques(client, [{
+    await createManyPersonnes(client, [{
             nom: "Bodo",
             prenom: "Maxence",
             sexe: "M",
@@ -65,7 +65,7 @@ async function insertPersonnesPhysiques(client) {
 }
 
 
-async function createManyPersonnesPhysiquesPhysiques(client, valeur) {
+async function createManyPersonnes(client, valeur) {
     const result = await client.db("location").collection("personnes").insertMany(valeur);
     console.log(`Inserted persons ${result.insertedId}`);
 
