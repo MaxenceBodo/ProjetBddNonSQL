@@ -1,15 +1,15 @@
 const { MongoClient } = require("mongodb");
-const uri = "mongodb://localhost:27017"
+const uri = "mongodb+srv://angela:1234@location.juee0.mongodb.net/location?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
-async function main() {
-    try{
-        await client.connect(console.log('Connexion reussie !'))
-    }catch (error){
-        console.log(error);
-    }finally{
-        client.close()
+async function run() {
+    try {
+        await client.connect();
+        client.db("location").command({ ping: 1 });
+        console.log("Connected successfully to server");
+    } finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
     }
-}
-
-main().catch(console.dir)
+  }
+  run().catch(console.dir);
