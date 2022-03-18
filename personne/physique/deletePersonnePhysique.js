@@ -17,7 +17,7 @@ async function Delete() {
 Delete().catch(console.dir);
 
 async function deleteByname(client, option) {
-    const res = await client.db("location").collection("personne").deleteOne({nom: option});
+    const res = await client.db("location").collection("personnesPhysiques").deleteOne({nom: option});
     console.log(res);
     console.log(`${res.deletedCount} document supprimés`);
 }

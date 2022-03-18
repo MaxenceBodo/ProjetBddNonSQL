@@ -19,7 +19,7 @@ async function Update() {
 Update().catch(console.dir);
 
 async function updateByNom(client, nom, updatedDoc) {
-    const res = await client.db('location').collection('personnes').updateOne(
+    const res = await client.db('location').collection('personnesPhysiques').updateOne(
         {nom: nom}, {$set: updatedDoc});
 
     console.log(`${res.matchedCount} documents trouves`);

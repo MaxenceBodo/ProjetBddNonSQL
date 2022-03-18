@@ -21,7 +21,7 @@ Read().catch(console.dir);
 
 
 async function findByname(client, name) {
-    const res = await client.db('location').collection('personnes').findOne({nom: name});
+    const res = await client.db('location').collection('personnesPhysiques').findOne({nom: name});
 
     if (!res) {
         console.log('Personne inexistante');
@@ -35,7 +35,7 @@ async function findByname(client, name) {
 
 
 async function FindAll(client) {
-    const rx = await client.db('location').collection('personnes').find();
+    const rx = await client.db('location').collection('personnesPhysiques').find();
     const tax = await rx.toArray();
     tax.forEach((result) => {
         console.log(result);
@@ -43,7 +43,7 @@ async function FindAll(client) {
 }
 
 async function findByVille(client, ville) {
-    const res = await client.db('location').collection("personnes").find({"adresse.ville": ville});
+    const res = await client.db('location').collection("personnesPhysiques").find({"adresse.ville": ville});
     const arr = await res.toArray();
     arr.forEach((result) => {
         console.log(result);

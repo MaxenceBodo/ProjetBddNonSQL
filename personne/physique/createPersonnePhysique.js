@@ -66,12 +66,12 @@ async function insertPersonnesPhysiques(client) {
 
 
 async function createManyPersonnes(client, valeur) {
-    const result = await client.db("location").collection("personnes").insertMany(valeur);
+    const result = await client.db("location").collection("personnesPhysiques").insertMany(valeur);
     console.log(`Inserted persons ${result.insertedId}`);
 
 }
 
 async function createPersonne(client, valeur) {
-    const result = await client.db("location").collection("personnes").insertOne(valeur);
+    const result = await client.db("location").collection("personnesPhysiques").insertOne(valeur);
     console.log(`La personne est inserée avec l'id: ${result.insertedId}`);
 }

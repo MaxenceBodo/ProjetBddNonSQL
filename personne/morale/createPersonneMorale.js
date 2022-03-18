@@ -74,12 +74,12 @@ async function insertPersonnesMorales(client){
 }
 
 async function createManyPersonnes(client, valeur) {
-    const result = await client.db("location").collection("personnes").insertMany(valeur);
+    const result = await client.db("location").collection("personnesMorales").insertMany(valeur);
     console.log(`Les personnes ont été insérés avec l'ID ${result.insertedId}`);
 
 }
 
 async function createPersonne(client, valeur) {
-    const result = await client.db("location").collection("personnes").insertOne(valeur);
+    const result = await client.db("location").collection("personnesMorales").insertOne(valeur);
     console.log(`La personne est inserée avec l'id: ${result.insertedId}`);
 }
