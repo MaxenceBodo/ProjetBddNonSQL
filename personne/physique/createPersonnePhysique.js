@@ -5,7 +5,7 @@ const client = new MongoClient(uri);
 async function insert() {
     try {
         await client.connect();
-        await insertPersonnes(client);
+        await insertPersonnesPhysiques(client);
 
     } catch (error) {
         console.error(error);
@@ -17,8 +17,8 @@ async function insert() {
 insert().catch(console.dir);
 
 
-async function insertPersonnes(client) {
-    await createManyPersonnes(client, [{
+async function insertPersonnesPhysiques(client) {
+    await createManyPersonnesPhysiques(client, [{
             nom: "Bodo",
             prenom: "Maxence",
             sexe: "M",
@@ -65,7 +65,7 @@ async function insertPersonnes(client) {
 }
 
 
-async function createManyPersonnes(client, valeur) {
+async function createManyPersonnesPhysiquesPhysiques(client, valeur) {
     const result = await client.db("location").collection("personnes").insertMany(valeur);
     console.log(`Inserted persons ${result.insertedId}`);
 
