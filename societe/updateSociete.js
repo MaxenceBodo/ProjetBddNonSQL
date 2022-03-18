@@ -5,7 +5,7 @@ const client = new MongoClient(uri);
 async function Update() {
     try {
         await client.connect();
-        await updateBySIRET(client, 44306184100047, {nomEntreprise: "Amazon"});
+        await updateBySIRET(client, 45218754132421, {directeur:{nom:"Bodo"}});
     } catch (error) {
         console.log(error);
     } finally {
@@ -15,7 +15,7 @@ async function Update() {
 Update().catch(console.dir);
 
 async function updateBySIRET(client, SIRET, updatedDoc) {
-    const res = await client.db('location').collection('personnesMorales').updateOne(
+    const res = await client.db('location').collection('societe').updateOne(
         {"SIRET": SIRET}, {$set: updatedDoc});
 
     console.log(`${res.matchedCount} documents trouves`);

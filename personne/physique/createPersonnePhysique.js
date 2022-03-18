@@ -19,6 +19,7 @@ insert().catch(console.dir);
 
 async function insertPersonnesPhysiques(client) {
     await createManyPersonnes(client, [{
+            _id:1,
             nom: "Bodo",
             prenom: "Maxence",
             sexe: "M",
@@ -33,6 +34,7 @@ async function insertPersonnesPhysiques(client) {
             }
         },
             {
+                _id:2,
                 nom: "Coutanceau",
                 prenom: "Fabien",
                 sexe: "M",
@@ -47,6 +49,7 @@ async function insertPersonnesPhysiques(client) {
                 }
             },
             {
+                _id:3,
                 nom: "Joti",
                 prenom: "Anxhela",
                 sexe: "F",

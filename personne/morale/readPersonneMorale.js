@@ -7,9 +7,17 @@ async function Read() {
         await client.connect();
         console.log("Affiche toutes les entreprises");
         await FindAll(client);
-        console.log("")
+        
+        console.log("___________________________________________________________")
+
         console.log("Affiche les entreprises avec un pays");
         await findByPays(client, "France");
+
+        console.log("___________________________________________________________")
+
+        console.log("Affiche les entreprises avec un SIRET");
+        await findBySiret(client, 44306184100047);
+
     } catch (error) {
         console.error(error);
     } finally {
@@ -17,6 +25,8 @@ async function Read() {
     }
 
 }
+Read().catch(console.dir);
+
 
 async function FindAll(client) {
     const rx = await client.db('location').collection('personnesMorales').find();
@@ -35,7 +45,7 @@ async function findByPays(client,pays){
 }
 
 async function findBySiret(client,SIRET){
-    const res = await client.db('location').collection("personnesMorales").find({"SIRET": SIRET});
+    const res = await client.db('location').collection("personnesMorales").find({SIRET :SIRET});
     const arr = await res.toArray();
     arr.forEach((result) => {
         console.log(result);

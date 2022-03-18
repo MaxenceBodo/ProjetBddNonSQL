@@ -18,6 +18,7 @@ insert().catch(console.dir);
 
 async function insertPersonnesMorales(client){
     await createManyPersonnes(client,[{
+                _id:1,
                 SIRET : 44306184100047,
                 nomEntreprise :"Google",
                 compteEntreprise : "Google",
@@ -35,6 +36,7 @@ async function insertPersonnesMorales(client){
                     adresseComplementaire: ""
                 }
             },{
+                _id:2,
                 SIRET : 35012746000284,
                 nomEntreprise :"Fnac",
                 compteEntreprise : "Fnac",
@@ -52,6 +54,7 @@ async function insertPersonnesMorales(client){
                     adresseComplementaire: ""
                 }
             },{
+                _id:3,
                 SIRET : 43491253100028,
                 nomEntreprise :"La Foir Fouille",
                 compteEntreprise : "La Foir Fouille",
