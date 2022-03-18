@@ -5,18 +5,14 @@ const client = new MongoClient(uri);
 async function Read() {
     try {
         await client.connect();
-        console.log("Affiche toutes les entreprises");
+        console.log("Affiche toutes les personnes");
         await FindAll(client);
         
         console.log("___________________________________________________________")
 
-        console.log("Affiche les entreprises avec un pays");
+        console.log("Affiche les personnes en pays");
         await findByPays(client, "France");
 
-        console.log("___________________________________________________________")
-
-        console.log("Affiche les entreprises avec un SIRET");
-        await findBySiret(client, 44306184100047);
 
     } catch (error) {
         console.error(error);
@@ -38,14 +34,6 @@ async function FindAll(client) {
 
 async function findByPays(client,pays){
     const res = await client.db('location').collection("personnesMorales").find({"adresse.pays": pays});
-    const arr = await res.toArray();
-    arr.forEach((result) => {
-        console.log(result);
-    });
-}
-
-async function findBySiret(client,SIRET){
-    const res = await client.db('location').collection("personnesMorales").find({SIRET :SIRET});
     const arr = await res.toArray();
     arr.forEach((result) => {
         console.log(result);

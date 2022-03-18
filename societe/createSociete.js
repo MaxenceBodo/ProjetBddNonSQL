@@ -32,7 +32,7 @@ async function insertSociete(client){
             pays:"France",
             adresseComplementaire: ""
         },
-        agence:[]
+        agence:[1,2,3,4]
     })
 }
 

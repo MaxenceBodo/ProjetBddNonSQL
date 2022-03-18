@@ -5,9 +5,14 @@ const client = new MongoClient(uri);
 async function Read() {
     try {
         await client.connect();
-        console.log("Affiche toutes les entreprises");
-        await Find(client);
 
+        console.log("Affiche toutes les agences");
+        await findAll(client);
+        console.log("___________________________________________________________")
+
+        console.log("Affiche toutes les agences en France");
+        await findByPays(client)
+        
     } catch (error) {
         console.error(error);
     } finally {
@@ -17,8 +22,16 @@ async function Read() {
 }
 Read().catch(console.dir);
 
-async function Find(client) {
-    const rx = await client.db('location').collection('societe').find();
+async function findAll(client) {
+    const rx = await client.db('location').collection('agence').find();
+    const tax = await rx.toArray();
+    tax.forEach((result) => {
+        console.log(result);
+    });
+}
+
+async function findByPays(client, pays) {
+    const rx = await client.db('location').collection('agence').find({"adresse.pays":agence});
     const tax = await rx.toArray();
     tax.forEach((result) => {
         console.log(result);
