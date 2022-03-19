@@ -5,7 +5,7 @@ const client = new MongoClient(uri);
 async function insert() {
     try {
         await client.connect();
-        await insertSociete(client);
+        await insertAgence(client);
 
     } catch (error) {
         console.error(error);
@@ -16,7 +16,7 @@ async function insert() {
 
 insert().catch(console.dir);
 
-async function insertSociete(client){
+async function insertAgence(client){
     await createSociete(client,[{
         _id:1,
         représentant:{
