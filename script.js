@@ -9,7 +9,7 @@ async function main() {
         await client.connect();
 
         //essaie des scripts
-        profitDeuxDernirsMois(client);
+        await profitDeuxDerniersMois(client);
 
 
     } finally {
@@ -20,13 +20,15 @@ async function main() {
 
 main().catch(console.error);
 
-async function profitContraDeLocation(){
-    
-}
-async function profitDeuxDernirsMois(client){
-    clientdb('location').collection('contratDeLocation').agregate({
-        "$group":{
-            _id
-        }
-    })
+
+async function profitDeuxDerniersMois(client){
+    client.db('location').collection('contratLocation').aggregate([
+        {
+            $match:{dateFin:{$lte:"2022-01-20"}}
+        },
+        {$group: {
+            _id:"$agence",total:{$sum:"$montantAPayer"}
+          }}
+    ])
+    console.log("Inséré")
 }
