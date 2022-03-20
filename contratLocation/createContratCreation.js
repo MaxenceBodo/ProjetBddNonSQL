@@ -21,15 +21,17 @@ async function insertContratLocation(client) {
         {
             _id:2,
             dateDebut:"2022-01-13", //YYYY-mm-dd
-            dateFin:"2022-02-33",
+            dateFin:"2022-02-23",
+            personne:{
+                idPersonne:1,
+                typePersonne:"morale"
+            },
             agence:3,
             vehicule:2,
-            personne:3,
             penalite:[1]
         }
     ]
     );
-
 }
 
 
