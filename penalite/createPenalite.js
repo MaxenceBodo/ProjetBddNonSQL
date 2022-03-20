@@ -32,6 +32,6 @@ async function insertPenalite(client) {
 
 async function createPenalite(client, valeur) {
     const result = await client.db("location").collection("penalite").insertMany(valeur);
-    console.log(`Inserted persons ${result.insertedId}`);
+    console.log(`Penalite inseree`);
 
 }

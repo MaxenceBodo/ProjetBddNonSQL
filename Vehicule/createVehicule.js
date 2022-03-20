@@ -17,6 +17,7 @@ insert().catch(console.dir);
 
 async function insertVehicule(client){
     await createVehicule(client,[{
+        _id:1,
         prixTotal : 20000,
         anneeMiseEnService:2017,
         kilometrage:76524,
@@ -24,6 +25,7 @@ async function insertVehicule(client){
         marque:5,
         modele:2
     },{
+        _id:2,
         prixTotal : 15312,
         anneeMiseEnService:2015,
         kilometrage:102365,
@@ -31,6 +33,7 @@ async function insertVehicule(client){
         marque:1,
         modele:1
     },{
+        _id:3,
         prixTotal :8500,
         anneeMiseEnService:2007,
         kilometrage:251325,
