@@ -22,7 +22,7 @@ async function insertPenalite(client) {
         {
             _id:1,
             sommePenalite:5000,
-            joursDeRetars:2
+            joursDeRetard:2
         }
     ]
     );
