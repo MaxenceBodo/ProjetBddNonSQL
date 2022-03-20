@@ -39,3 +39,4 @@ async function findByMarque(client, modele){
         console.log(result);
     });
 }
+
