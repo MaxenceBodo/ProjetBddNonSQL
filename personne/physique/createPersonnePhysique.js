@@ -1,5 +1,5 @@
 const {MongoClient} = require("mongodb");
-const uri = "mongodb+srv://maxence:1234@location.g3zdj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://angela:1234@location.juee0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 async function insert() {
@@ -19,7 +19,7 @@ insert().catch(console.dir);
 
 async function insertPersonnesPhysiques(client) {
     await createManyPersonnes(client, [{
-            _id:1,
+            _id: 1,
             nom: "Bodo",
             prenom: "Maxence",
             sexe: "M",
@@ -31,10 +31,11 @@ async function insertPersonnesPhysiques(client) {
                 ville: "Villejuif",
                 pays: "France",
                 adresseComplementaire: ""
-            }
+            },
+            compteBancaire: [1]
         },
             {
-                _id:2,
+                _id: 2,
                 nom: "Coutanceau",
                 prenom: "Fabien",
                 sexe: "M",
@@ -46,10 +47,11 @@ async function insertPersonnesPhysiques(client) {
                     ville: "Paris",
                     pays: "France",
                     adresseComplementaire: ""
-                }
+                },
+                compteBancaire: [2]
             },
             {
-                _id:3,
+                _id: 3,
                 nom: "Joti",
                 prenom: "Anxhela",
                 sexe: "F",
@@ -61,7 +63,8 @@ async function insertPersonnesPhysiques(client) {
                     ville: "Clichy",
                     pays: "France",
                     adresseComplementaire: ""
-                }
+                },
+                compteBancaire: [3]
             }]
     );
 
@@ -70,7 +73,7 @@ async function insertPersonnesPhysiques(client) {
 
 async function createManyPersonnes(client, valeur) {
     const result = await client.db("location").collection("personnesPhysiques").insertMany(valeur);
-    console.log(`Inserted persons ${result.insertedId}`);
+    console.log(`Inserted personnes ${result.insertedIds}`);
 
 }
 

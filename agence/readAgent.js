@@ -1,5 +1,5 @@
 const {MongoClient} = require("mongodb");
-const uri = "mongodb+srv://maxence:1234@location.g3zdj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://angela:1234@location.juee0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 async function Read() {
@@ -18,7 +18,7 @@ async function Read() {
 Read().catch(console.dir);
 
 async function Find(client) {
-    const rx = await client.db('location').collection('societe').find();
+    const rx = await client.db('location').collection('agence').find();
     const tax = await rx.toArray();
     tax.forEach((result) => {
         console.log(result);

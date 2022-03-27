@@ -1,5 +1,5 @@
 const {MongoClient} = require("mongodb");
-const uri = "mongodb+srv://maxence:1234@location.g3zdj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://angela:1234@location.juee0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 async function insert() {
@@ -19,7 +19,7 @@ insert().catch(console.dir);
 async function insertAgence(client){
     await createSociete(client,[{
         _id:1,
-        représentant:{
+        representant:{
             nom:"Robert",
             prenom:"California",
             tel:"0612714845"
@@ -33,7 +33,7 @@ async function insertAgence(client){
         }
     },{
         _id:2,
-        représentant:{
+        representant:{
             nom:"Mickael",
             prenom:"Scott",
             tel:"0645126354"
@@ -47,7 +47,7 @@ async function insertAgence(client){
         }
     },{
         _id:3,
-        représentant:{
+        representant:{
             nom:"Jimm",
             prenom:"Halper",
             tel:"0612214845"
@@ -56,13 +56,12 @@ async function insertAgence(client){
             voie:"Rue des étoiles",
             numero:31,
             ville:"Rungis",
-            ville:"saint père en retz",
             pays:"France",
             adresseComplementaire:"Etage 4"
         }
     },{
         _id:4,
-        représentant:{
+        representant:{
             nom:"Schrute ",
             prenom:"Dwight",
             tel:"0612710245"
@@ -79,5 +78,5 @@ async function insertAgence(client){
 
 async function createSociete(client, valeur) {
     const result = await client.db("location").collection("agence").insertMany(valeur);
-    console.log(`Les agence ont été inséré`);
+    console.log(`Les agences ont été inséré. Les IDs: ` + result.insertedIds );
 }

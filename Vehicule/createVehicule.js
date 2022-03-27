@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://maxence:1234@location.g3zdj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://angela:1234@location.juee0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 async function insert(){
@@ -18,7 +18,7 @@ insert().catch(console.dir);
 async function insertVehicule(client){
     await createVehicule(client,[{
         _id:1,
-        prixTotal : 20000,
+        prixJour : 20000,
         anneeMiseEnService:2017,
         kilometrage:76524,
         etatVehicule:"non loue",
@@ -26,7 +26,7 @@ async function insertVehicule(client){
         modele:2
     },{
         _id:2,
-        prixTotal : 15312,
+        prixJour : 15312,
         anneeMiseEnService:2015,
         kilometrage:102365,
         etatVehicule:"loue",
@@ -34,7 +34,7 @@ async function insertVehicule(client){
         modele:1
     },{
         _id:3,
-        prixTotal :8500,
+        prixJour :8500,
         anneeMiseEnService:2007,
         kilometrage:251325,
         etatVehicule:"loue",
@@ -45,5 +45,5 @@ async function insertVehicule(client){
 
 async function createVehicule(client, valeur) {
     const result = await client.db("location").collection("vehicule").insertMany(valeur);
-    console.log(`Les vehicules ont été inseré`);
+    console.log(`Les vehicules ont été inseré ${result.insertedIds.toString()}`);
 }

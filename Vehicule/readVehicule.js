@@ -1,18 +1,25 @@
 const {MongoClient} = require("mongodb");
-const uri = "mongodb+srv://maxence:1234@location.g3zdj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://angela:1234@location.juee0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
+
+const db = client.db('location').collection('vehicule');
 
 async function Read() {
     try {
         await client.connect();
 
         console.log("Affiche tous les vehicules");
-        await findAll(client);
+        // await findAll(client);
         console.log("___________________________________________________________")
 
         console.log("Affiche toutes les vehicules etant des voitures");
-        await findByModele(client,2)
-        
+        // await findByModele(2);
+
+        console.log("Affiche toutes les vehicules avec l'id X");
+        // await findById(1);
+
+        console.log("Affiche l'etat du vehicule avec l'id X");
+        // await getEtatVehicule(1);
     } catch (error) {
         console.error(error);
     } finally {
@@ -20,20 +27,36 @@ async function Read() {
     }
 
 }
+
 Read().catch(console.dir);
 
 async function findAll(client) {
-    const rx = await client.db('location').collection('vehicule').find();
+    const rx = await db.find();
     const tax = await rx.toArray();
     tax.forEach((result) => {
         console.log(result);
     });
 }
 
-async function findByModele(client, id) {
-    const rx = await client.db('location').collection('vehicule').find({"modele":id});
+async function findByModele(id) {
+    const rx = await db.find({"modele": id});
     const tax = await rx.toArray();
     tax.forEach((result) => {
         console.log(result);
     });
 }
+
+async function findById(id) {
+    const res = await db.findOne({"_id": id});
+    console.log(res)
+}
+
+async function getEtatVehicule(client, id) {
+    const res = await db.find({"_id": id},{projection: {"_id": 0, "etatVehicule":1}});
+    const tax = await res.toArray();
+    tax.forEach((result) => {
+        console.log(result);
+    });
+}
+
+module.exports = {getEtatVehicule};

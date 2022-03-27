@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://maxence:1234@location.g3zdj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://angela:1234@location.juee0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 async function insert(){
@@ -43,5 +43,5 @@ async function insertMarque(client){
 
 async function createMarque(client, valeur) {
     const result = await client.db("location").collection("marque").insertMany(valeur);
-    console.log(`Les modèles ont été inseré`);
+    console.log(`Les marques ont été inserés ${result.insertedIds}`);
 }
