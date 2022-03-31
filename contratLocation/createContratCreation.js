@@ -14,14 +14,14 @@ async function insert() {
     }
 }
 
-//insert().catch(console.dir);
+// insert().catch(console.dir);
 
 async function insertContratLocation(client) {
     await createManyContratLocations(client, [
         {
             _id:1,
-            dateDebut:"2022-01-01", //YYYY-mm-dd
-            dateFin:"2022-01-14",
+            dateDebut:"2021-10-01", //YYYY-mm-dd
+            dateFin:"2021-10-14",
             montantAPayer:5000,
             personne:{
                 idPersonne:1,
@@ -33,8 +33,8 @@ async function insertContratLocation(client) {
             clauseLocation:"Texte tres long"
         },{
             _id:2,
-            dateDebut:"2021-09-13", //YYYY-mm-dd
-            dateFin:"2021-09-15",
+            dateDebut:"2021-11-13", //YYYY-mm-dd
+            dateFin:"2021-11-27",
             montantAPayer:5000,
             personne:{
                 idPersonne:2,
@@ -46,7 +46,7 @@ async function insertContratLocation(client) {
             clauseLocation:"Texte tres long"
         },{
             _id:3,
-            dateDebut:"2022-01-13", //YYYY-mm-dd
+            dateDebut:"2022-02-13", //YYYY-mm-dd
             dateFin:"2022-02-23",
             montantAPayer:5000,
             personne:{
@@ -59,8 +59,8 @@ async function insertContratLocation(client) {
             clauseLocation:"Texte tres long"
         },{
             _id:4,
-            dateDebut:"2019-02-23", //YYYY-mm-dd
-            dateFin:"2019-02-28",
+            dateDebut:"2021-12-23", //YYYY-mm-dd
+            dateFin:"2021-12-28",
             montantAPayer:5000,
             personne:{
                 idPersonne:1,

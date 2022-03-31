@@ -19,25 +19,32 @@ async function main() {
         await client.connect();
 
         //Creation dans la table
-        console.log("-----------------------------------------")
-        console.log('\n')
-        console.log('\n')
-        console.log("Creation des tables")
+        // console.log("-----------------------------------------")
+        // console.log('\n')
+        // console.log('\n')
+        // console.log("Creation des tables")
 
-        await ajoutVehicule(client);
-        await createA.insertAgence(client);
-        await createCB.insertComptesBancaires(client);
-        await createCL.insertContratLocation(client);
-        await createMo.insertModele(client),
-        await createPena.insertPenalite(client);
-        await createPersMo.insertPersonnesMorales(client);
-        await createPersoPh.insertPersonnesPhysiques(client);
-        await createSociete.insertSociete(client)
+        // await ajoutVehicule(client);
+        // await createA.insertAgence(client);
+        // await createCB.insertComptesBancaires(client);
+        // await createCL.insertContratLocation(client);
+        // await createMo.insertModele(client),
+        // await createPena.insertPenalite(client);
+        // await createPersMo.insertPersonnesMorales(client);
+        // await createPersoPh.insertPersonnesPhysiques(client);
+        // await createSociete.insertSociete(client)
 
-        console.log('\n')
-        console.log('\n')
-        console.log("-----------------------------------------")
+        // console.log('\n')
+        // console.log('\n')
+        // console.log("-----------------------------------------")
 
+        console.log("Fonction agregation")
+
+        console.log("Deux premiers mois");
+        await profitDeuxPremiersMois(client);
+
+        console.log("Deux derniers mois");
+        await profitDeuxDerniersMois(client);
 
     } catch(error){
         console.log(error)
@@ -50,19 +57,52 @@ async function main() {
 
 main().catch(console.error);
 
-/*
-async function profitDeuxDerniersMois(client){
-    client.db('location').collection('contratLocation').aggregate([
+async function profitDeuxPremiersMois(client){
+    const test = client.db('location').collection('contratLocation').aggregate([
         {
-            $match:{dateFin:{$lte:"2022-01-20"}}
-        },
-        {$group: {
-            _id:"$agence",total:{$sum:"$montantAPayer"}
-          }}
-    ])
-    console.log("Inséré")
+          '$match': {
+            'dateFin': {
+              '$gte': '2021-10-01', 
+              '$lte': '2021-11-31'
+            }
+          }
+        }, {
+          '$group': {
+            '_id': 0, 
+            'total': {
+                '$sum': '$montantAPayer'
+            }
+          }
+        }
+      ])
+    for await(const doc of test){
+        console.log(doc);
+    }
 }
-*/
+
+async function profitDeuxDerniersMois(client){
+    const test = client.db('location').collection('contratLocation').aggregate([
+        {
+          '$match': {
+            'dateFin': {
+              '$lte': '2022-02-01'
+            }
+          }
+        }, {
+          '$group': {
+            '_id': 0, 
+            'total': {
+                '$sum': '$montantAPayer'
+            }
+          }
+        }
+      ])
+      for await(const doc of test){
+        console.log(doc);
+    }
+    // console.log("Inséré")
+}
+
 
 async function ajoutVehicule(client){
     let ajout;
@@ -107,6 +147,16 @@ async function ajoutVehicule(client){
         }
         await createV.createVehiculeOne(client,ajout)
     }
+}
+
+//calcul penalite => 20% du montant + TVA 
+async function calculerPenalite(client){
+    
+}
+
+// calculer prendre total prix + penalite retard (fonction précédente je pense)
+async function calculerDepenseEntreprise(client){
+
 }
 
 //Sert pour varier les donnes dans les vehicules
