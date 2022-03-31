@@ -80,12 +80,18 @@ async function profitDeuxPremiersMois(client){
     }
 }
 
+//Permet d'avoir la date du jour -2 mois
+let date = new Date();
+(date.setMonth(date.getMonth()-2));
+let dateInput = date.toLocaleDateString();
+
 async function profitDeuxDerniersMois(client){
+  console.log(dateInput);
     const test = client.db('location').collection('contratLocation').aggregate([
         {
           '$match': {
             'dateFin': {
-              '$lte': '2022-02-01'
+              '$lte': dateInput
             }
           }
         }, {
