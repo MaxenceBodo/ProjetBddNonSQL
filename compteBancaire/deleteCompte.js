@@ -5,7 +5,7 @@ const client = new MongoClient(uri);
 async function Delete() {
     try {
         await client.connect();
-        await deleteBySIRET(client, 44306184100047);
+        await deleteByID(client, 1);
     } catch (error) {
         console.log(error)
 
@@ -15,14 +15,14 @@ async function Delete() {
 }
 //Delete().catch(console.dir);
 
-async function deleteBySIRET(client, SIRET) {
-    const res = await client.db("location").collection("personnesMorales").deleteOne({"SIRET": SIRET});
+async function deleteByID(client, id) {
+    const res = await client.db("location").collection("compteBancaire").deleteOne({_id: id});
     console.log(res);
     console.log(`${res.deletedCount} document supprimés`);
 }
 
 async function deleteAll(client) {
-    const res = await client.db("location").collection("personnesMorales").deleteMany({});
+    const res = await client.db("location").collection("compteBancaire").deleteMany({});
     console.log(res);
     console.log(`${res.deletedCount} document supprimés`);
 }

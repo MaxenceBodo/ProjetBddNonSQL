@@ -13,10 +13,18 @@ async function Delete() {
         client.close()
     }
 }
-Delete().catch(console.dir);
+//Delete().catch(console.dir);
 
 async function deleteBySIRET(client, SIRET) {
     const res = await client.db("location").collection("societe").deleteOne({"SIRET": SIRET});
     console.log(res);
     console.log(`${res.deletedCount} document supprimés`);
 }
+
+async function deleteAll(client) {
+    const res = await client.db("location").collection("societe").deleteOne({});
+    console.log(res);
+    console.log(`${res.deletedCount} document supprimés`);
+}
+
+module.exports = {deleteAll}

@@ -13,10 +13,18 @@ async function Delete() {
         client.close()
     }
 }
-Delete().catch(console.dir);
+//Delete().catch(console.dir);
 
 async function deleteByID(client, id) {
     const res = await client.db("location").collection("agence").deleteOne({_id: id});
     console.log(res);
     console.log(`${res.deletedCount} document supprimés`);
 }
+
+async function deleteAll(client) {
+    const res = await client.db("location").collection("agence").deleteMany({});
+    console.log(res);
+    console.log(`${res.deletedCount} document supprimés`);
+}
+
+module.exports = {deleteAll}
