@@ -9,13 +9,8 @@ async function Update() {
     try {
         await client.connect();
         // await updateById({kilometrage: 76524}, {kilometrage: 76530});
+        await changeStatusVehicule(1);
 
-        // ========================================================
-        //UNFINISHED
-        // await getVehicule.getEtatVehicule(,1);
-        // console.log(res1);
-
-        //============================================================
     } catch (error) {
         console.log(error);
     } finally {
@@ -32,9 +27,23 @@ async function updateById(filtre, updatedDoc) {
     console.log(`${res.modifiedCount} mis a jour`);
 }
 
-async function setStatusVehiculeLoue(id) {
-    let res = await db.updateOne({"_id": id}, {"etatVehicule": "loue"});
+async function changeStatusVehicule(id) {
+    const etat = await getVehicule.getEtatVehicule(client, id);
+    console.log(etat);
 
-    console.log(`${res.matchedCount} documents trouves`);
+    if (etat.etatVehicule === "non loue") await setStatusVehiculeLoue(id);
+    else await setStatusVehiculeNonLoue(id);
+
+    console.log(etat.etatVehicule);
+
+}
+
+async function setStatusVehiculeLoue(id) {
+    let res = await db.updateOne({"_id": id}, {$set: {"etatVehicule": "loue"}});
+    console.log(`${res.modifiedCount} mis a jour`);
+}
+
+async function setStatusVehiculeNonLoue(id) {
+    let res = await db.updateOne({"_id": id}, {$set: {"etatVehicule": "non loue"}});
     console.log(`${res.modifiedCount} mis a jour`);
 }

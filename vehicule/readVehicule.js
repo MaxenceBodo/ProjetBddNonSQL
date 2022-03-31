@@ -52,11 +52,11 @@ async function findById(id) {
 }
 
 async function getEtatVehicule(client, id) {
-    const res = await db.find({"_id": id},{projection: {"_id": 0, "etatVehicule":1}});
-    const tax = await res.toArray();
-    tax.forEach((result) => {
-        console.log(result);
-    });
+    // await client.connect();
+    // const db = client.db('location').collection('vehicule');
+    const res = await client.db('location').collection('vehicule').findOne({"_id": id},{projection: {"_id": 0, "etatVehicule":1}});
+    return res;
+
 }
 
 module.exports = {getEtatVehicule};

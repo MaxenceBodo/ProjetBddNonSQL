@@ -1,42 +1,43 @@
-const { MongoClient } = require("mongodb");
+const {MongoClient} = require("mongodb");
 const uri = "mongodb+srv://sorbonne:1234@location.2tudd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
-async function insert(){
-    try{
+async function insert() {
+    try {
         await client.connect();
         await insertMarque(client);
-    }catch(error){
+    } catch (error) {
         console.log(error);
-    }finally{
+    } finally {
         client.close();
     }
 }
 
 insert().catch(console.dir);
 
-async function insertMarque(client){
-    await createMarque(client,[
+async function insertMarque(client) {
+    await createMarque(client, [
         {
-            _id:1,
-            nom:"BMW",
-            prixMarque:2
-        },{
-            _id:2,
-            nom:"audi",
-            prixMarque:3
-        },{
-            _id:3,
-            nom:"peugeot",
-            prixMarque:1
-        },{
-            _id:4,
-            nom:"renaud",
-            prixMarque:1
-        },{
-            _id:5,
-            nom:"lamborghini",
-            prixMarque:5
+            _id: 1,
+            nom: "BMW",
+            coeff: 2
+        }, {
+            _id: 2,
+            nom: "audi",
+            coeff: 3
+        }, {
+            _id: 3,
+            nom: "peugeot",
+            coeff: 1
+        }, {
+            _id: 4,
+            nom: "renaud",
+            coeff: 1
+        },
+        {
+            _id: 5,
+            nom: "lamborghini",
+            coeff: 5
         }
     ])
 }
