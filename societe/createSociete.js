@@ -14,7 +14,7 @@ async function insert() {
     }
 }
 
-insert().catch(console.dir);
+// insert().catch(console.dir);
 
 async function insertSociete(client){
     await createSociete(client,{
@@ -40,3 +40,5 @@ async function createSociete(client, valeur) {
     const result = await client.db("location").collection("societe").insertOne(valeur);
     console.log(`La societe est inserée avec l'id: ${result.insertedId}`);
 }
+
+module.exports = {insertSociete}

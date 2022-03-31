@@ -14,7 +14,7 @@ async function insert() {
     }
 }
 
-insert().catch(console.dir);
+// insert().catch(console.dir);
 
 
 async function insertPersonnesPhysiques(client) {
@@ -81,3 +81,5 @@ async function createPersonne(client, valeur) {
     const result = await client.db("location").collection("personnesPhysiques").insertOne(valeur);
     console.log(`La personne est inserée avec l'id: ${result.insertedId}`);
 }
+
+module.exports = {insertPersonnesPhysiques}
