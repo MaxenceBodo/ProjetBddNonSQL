@@ -18,73 +18,73 @@ async function insert() {
 
 async function insertContratLocation(client) {
     await createManyContratLocations(client, [
-        {
-            _id:1,
-            dateDebut:"2021-10-01", //YYYY-mm-dd
-            dateFin:"2021-10-14",
-            montantAPayer:5000,
-            personne:{
-                idPersonne:1,
-                typePersonne:"morale"
-            },
-            agence:3,
-            vehicule:2,
-            penalite:[],
-            clauseLocation:"Texte tres long"
-        },{
-            _id:2,
-            dateDebut:"2021-11-13", //YYYY-mm-dd
-            dateFin:"2021-11-27",
-            montantAPayer:5000,
-            personne:{
-                idPersonne:2,
-                typePersonne:"morale"
-            },
-            agence:3,
-            vehicule:1,
-            penalite:[],
-            clauseLocation:"Texte tres long"
-        },{
-            _id:3,
-            dateDebut:"2022-02-13", //YYYY-mm-dd
-            dateFin:"2022-02-23",
-            montantAPayer:5000,
-            personne:{
-                idPersonne:1,
-                typePersonne:"physique"
-            },
-            agence:1,
-            vehicule:1,
-            penalite:[],
-            clauseLocation:"Texte tres long"
-        },{
-            _id:4,
-            dateDebut:"2021-12-23", //YYYY-mm-dd
-            dateFin:"2021-12-28",
-            montantAPayer:5000,
-            personne:{
-                idPersonne:1,
-                typePersonne:"physique"
-            },
-            agence:4,
-            vehicule:3,
-            penalite:[],
-            clauseLocation:"Texte tres long"
-        },{
-            _id:5,
-            dateDebut:"2022-02-22", //YYYY-mm-dd
-            dateFin:"2022-02-23",
-            montantAPayer:5000,
-            personne:{
-                idPersonne:3,
-                typePersonne:"physique"
-            },
-            agence:2,
-            vehicule:3,
-            penalite:[1],
-            clauseLocation:"Texte tres long"
-        }
-    ]
+            {
+                _id: 1,
+                dateDebut: new Date("2022-01-01").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2022-04-01").toISOString(),
+                montantAPayer: 5000,
+                personne: {
+                    idPersonne: 1,
+                    typePersonne: "morale"
+                },
+                agence: 3,
+                vehicule: 2,
+                penalite: [],
+                clauseLocation: "Texte tres long"
+            }, {
+                _id: 2,
+                dateDebut: new Date("2021-09-13").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2021-09-15").toISOString(),
+                montantAPayer: 5000,
+                personne: {
+                    idPersonne: 2,
+                    typePersonne: "morale"
+                },
+                agence: 3,
+                vehicule: 1,
+                penalite: [],
+                clauseLocation: "Texte tres long"
+            }, {
+                _id: 3,
+                dateDebut: new Date("2022-01-13").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2022-02-23").toISOString(),
+                montantAPayer: 5000,
+                personne: {
+                    idPersonne: 1,
+                    typePersonne: "physique"
+                },
+                agence: 1,
+                vehicule: 1,
+                penalite: [],
+                clauseLocation: "Texte tres long"
+            }, {
+                _id: 4,
+                dateDebut: new Date("2019-02-23").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2019-02-28").toISOString(),
+                montantAPayer: 5000,
+                personne: {
+                    idPersonne: 1,
+                    typePersonne: "physique"
+                },
+                agence: 4,
+                vehicule: 3,
+                penalite: [],
+                clauseLocation: "Texte tres long"
+            }, {
+                _id: 5,
+                dateDebut: new Date("2022-02-22").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2022-02-23").toISOString(),
+                montantAPayer: 5000,
+                personne: {
+                    idPersonne: 3,
+                    typePersonne: "physique"
+                },
+                agence: 2,
+                vehicule: 3,
+                penalite: [1],
+                clauseLocation: "Texte tres long"
+            }
+        ]
     );
 }
 
