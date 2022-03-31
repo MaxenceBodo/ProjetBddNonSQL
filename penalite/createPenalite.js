@@ -5,8 +5,8 @@ const client = new MongoClient(uri);
 async function insert() {
     try {
         await client.connect();
-        await insertPenalite(client);
-
+        // await insertPenalite(client);
+        await checkForPenalites(client);
     } catch (error) {
         console.error(error);
     } finally {
@@ -14,22 +14,22 @@ async function insert() {
     }
 }
 
-// insert().catch(console.dir);
+insert().catch(console.dir);
 
 
 async function insertPenalite(client) {
     await createPenalite(client, [
-        {
-            _id:1,
-            sommePenalite:5000,
-            joursDeRetard:2
-        },
-        {
-            _id:2,
-            sommePenalite:1000,
-            joursDeRetard:1
-        }
-    ]
+            {
+                _id: 1,
+                sommePenalite: 5000,
+                joursDeRetard: 2
+            },
+            {
+                _id: 2,
+                sommePenalite: 1000,
+                joursDeRetard: 1
+            }
+        ]
     );
 
 }
@@ -41,4 +41,13 @@ async function createPenalite(client, valeur) {
 
 }
 
-module.exports = {insertPenalite}
+
+async function checkForPenalites(client) {
+    const res = await client.db("location").collection("contratLocation").find({"dateFin": {"$lt": new Date().toISOString()}});
+    const tax = await res.toArray();
+    tax.forEach((result) => {
+        console.log(result);
+    });
+}
+
+module.exports = {insertPenalite};
