@@ -2,7 +2,7 @@ const {MongoClient} = require("mongodb");
 const uri = "mongodb+srv://sorbonne:1234@location.2tudd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
-const createV = require('./Vehicule/createVehicule');
+const createV = require('./vehicule/createVehicule');
 const createA = require('./agence/createAgence');
 const createCB = require('./compteBancaire/createCompte');
 const createCL  =require('./contratLocation/createContratCreation');
@@ -12,32 +12,52 @@ const createPersMo = require('./personne/morale/createPersonneMorale');
 const createPersoPh = require('./personne/physique/createPersonnePhysique');
 const createSociete = require('./societe/createSociete');
 
+const deleteV = require('./vehicule/deleteVehicule');
+const deleteA = require('./agence/deleteAgence');
+const deleteCB = require('./compteBancaire/deleteCompte');
+const deleteCL =require('./contratLocation/deleteContratLocation');
+const deleteMo = require('./modele/deleteModele');
+const deletePena = require('./penalite/deletePenalite');
+const deletePersMo = require('./personne/morale/deletePersonneMorale');
+const deletePersoPh = require('./personne/physique/deletePersonnePhysique');
+const deleteSociete = require('./societe/deleteSociete');
+
 async function main() {
 
     try {
         // Connexion à mongoDBe
         await client.connect();
+        //Delete de toutes les données pour eviter les problèmes lors d'un premier lancement
+        console.log("-----------------------------------------")
+        console.log("Suppression des tables")
+        await deleteV.deleteAll(client);
+        await deleteA.deleteAll(client);
+        await deleteCB.deleteAll(client);
+        await deleteCL.deleteAll(client);
+        await deleteMo.deleteAll(client);
+        await deletePena.deleteAll(client);
+        await deletePersMo.deleteAll(client);
+        await deletePersoPh.deleteAll(client);
+        await deleteSociete.deleteAll(client);
+        console.log('\n')
+        console.log('\n')
 
         //Creation dans la table
-        // console.log("-----------------------------------------")
-        // console.log('\n')
-        // console.log('\n')
-        // console.log("Creation des tables")
+        console.log("-----------------------------------------")
+        console.log("Creation des tables")
+        await ajoutVehicule(client);
+        await createA.insertAgence(client);
+        await createCB.insertComptesBancaires(client);
+        await createCL.insertContratLocation(client);
+        await createMo.insertModele(client),
+        await createPena.insertPenalite(client);
+        await createPersMo.insertPersonnesMorales(client);
+        await createPersoPh.insertPersonnesPhysiques(client);
+        await createSociete.insertSociete(client)
+        console.log('\n')
+        console.log('\n')
 
-        // await ajoutVehicule(client);
-        // await createA.insertAgence(client);
-        // await createCB.insertComptesBancaires(client);
-        // await createCL.insertContratLocation(client);
-        // await createMo.insertModele(client),
-        // await createPena.insertPenalite(client);
-        // await createPersMo.insertPersonnesMorales(client);
-        // await createPersoPh.insertPersonnesPhysiques(client);
-        // await createSociete.insertSociete(client)
-
-        // console.log('\n')
-        // console.log('\n')
-        // console.log("-----------------------------------------")
-
+        console.log("-----------------------------------------")
         console.log("Fonction agregation")
 
         console.log("Deux premiers mois");
@@ -80,11 +100,6 @@ async function profitDeuxPremiersMois(client){
     }
 }
 
-//Permet d'avoir la date du jour -2 mois
-let date = new Date();
-(date.setMonth(date.getMonth()-2));
-let dateInput = date.toLocaleDateString();
-
 async function profitDeuxDerniersMois(client){
   console.log(dateInput);
     const test = client.db('location').collection('contratLocation').aggregate([
@@ -109,7 +124,7 @@ async function profitDeuxDerniersMois(client){
     // console.log("Inséré")
 }
 
-
+//Fonction permettant d'ajouter des véhicules
 async function ajoutVehicule(client){
     let ajout;
     //Ajout SUV
@@ -155,7 +170,7 @@ async function ajoutVehicule(client){
     }
 }
 
-//calcul penalite => 20% du montant + TVA 
+//calcul penalite => 20% du montant + TVA (20%)
 async function calculerPenalite(client){
     
 }
@@ -176,3 +191,8 @@ function choixMarque(){
     let marque = ["BMW", "Audi", "Tesla", "Peugeot"]
     return marque[entierAleatoire(0,3)]
 }
+
+//Permet d'avoir la date du jour -2 mois
+let date = new Date();
+(date.setMonth(date.getMonth()-2));
+let dateInput = date.toLocaleDateString();
