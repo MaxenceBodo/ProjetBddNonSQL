@@ -13,7 +13,7 @@ async function insert(){
     }
 }
 
-insert().catch(console.dir);
+//insert().catch(console.dir);
 
 async function insertVehicule(client){
     await createVehicule(client,[{
@@ -22,7 +22,7 @@ async function insertVehicule(client){
         anneeMiseEnService:2017,
         kilometrage:76524,
         etatVehicule:"non loue",
-        marque:5,
+        marque:"BMW",
         modele:2
     },{
         _id:2,
@@ -30,7 +30,7 @@ async function insertVehicule(client){
         anneeMiseEnService:2015,
         kilometrage:102365,
         etatVehicule:"loue",
-        marque:1,
+        marque:"Audi",
         modele:1
     },{
         _id:3,
@@ -38,7 +38,7 @@ async function insertVehicule(client){
         anneeMiseEnService:2007,
         kilometrage:251325,
         etatVehicule:"loue",
-        marque:4,
+        marque:"Tesla",
         modele:3
     }])
 }
@@ -47,3 +47,10 @@ async function createVehicule(client, valeur) {
     const result = await client.db("location").collection("vehicule").insertMany(valeur);
     console.log(`Les vehicules ont été inseré ${result.insertedIds.toString()}`);
 }
+
+async function createVehiculeOne(client, valeur) {
+    const result = await client.db("location").collection("vehicule").insertOne(valeur);
+    console.log('insere');
+}
+
+module.exports= {createVehiculeOne};

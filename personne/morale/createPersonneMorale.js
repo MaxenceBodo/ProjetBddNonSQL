@@ -14,7 +14,7 @@ async function insert() {
     }
 }
 
-insert().catch(console.dir);
+// insert().catch(console.dir);
 
 async function insertPersonnesMorales(client) {
     await createManyPersonnes(client, [{
@@ -88,3 +88,5 @@ async function createPersonne(client, valeur) {
     const result = await client.db("location").collection("personnesMorales").insertOne(valeur);
     console.log(`La personne est inserée avec l'id: ${result.insertedId}`);
 }
+
+module.exports = {insertPersonnesMorales}

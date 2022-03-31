@@ -14,7 +14,7 @@ async function insert() {
     }
 }
 
-insert().catch(console.dir);
+// insert().catch(console.dir);
 
 
 async function insertPenalite(client) {
@@ -23,6 +23,11 @@ async function insertPenalite(client) {
             _id:1,
             sommePenalite:5000,
             joursDeRetard:2
+        },
+        {
+            _id:2,
+            sommePenalite:1000,
+            joursDeRetard:1
         }
     ]
     );
@@ -35,3 +40,5 @@ async function createPenalite(client, valeur) {
     console.log(`Penalite inseree`);
 
 }
+
+module.exports = {insertPenalite}

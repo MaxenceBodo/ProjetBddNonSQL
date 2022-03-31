@@ -14,7 +14,7 @@ async function insert() {
     }
 }
 
-insert().catch(console.dir);
+//insert().catch(console.dir);
 
 async function insertContratLocation(client) {
     await createManyContratLocations(client, [
@@ -95,6 +95,12 @@ async function createManyContratLocations(client, valeur) {
 
 }
 
+async function createContratLocations(client, valeur) {
+    const result = await client.db("location").collection("contratLocation").insertOne(valeur);
+    console.log(`Le contrats a été inséré`);
+
+}
+
 async function getTheMontantAPayer(dateDebut, dateFin, idVehicule) {
 
 }
@@ -103,3 +109,5 @@ async function getPrixJourVehicule(idVehicule) {
 
 
 }
+
+module.exports = {insertContratLocation}

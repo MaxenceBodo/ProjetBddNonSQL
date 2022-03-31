@@ -13,7 +13,7 @@ async function insert(){
     }
 }
 
-insert().catch(console.dir);
+//insert().catch(console.dir);
 
 async function insertModele(client){
     await createModele(client,[
@@ -37,3 +37,5 @@ async function createModele(client, valeur) {
     const result = await client.db("location").collection("modele").insertMany(valeur);
     console.log(`Les modèles ont été inseré`);
 }
+
+module.exports = {insertModele}

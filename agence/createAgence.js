@@ -14,7 +14,7 @@ async function insert() {
     }
 }
 
-insert().catch(console.dir);
+//insert().catch(console.dir);
 
 async function insertAgence(client){
     await createSociete(client,[{
@@ -80,3 +80,5 @@ async function createSociete(client, valeur) {
     const result = await client.db("location").collection("agence").insertMany(valeur);
     console.log(`Les agences ont été inséré. Les IDs: ` + result.insertedIds );
 }
+
+module.exports= {insertAgence};
