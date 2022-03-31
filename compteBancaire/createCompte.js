@@ -15,7 +15,7 @@ async function insert() {
     }
 }
 
-insert().catch(console.dir);
+//insert().catch(console.dir);
 
 async function insertComptesBancaires(client) {
     await createManyComptes(client, [
@@ -71,3 +71,5 @@ async function createManyComptes(client, valeur) {
     console.log(`Inserted comptes ${result.insertedId}`);
 
 }
+
+module.exports = {insertComptesBancaires}
