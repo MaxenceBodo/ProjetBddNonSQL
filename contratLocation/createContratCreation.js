@@ -95,6 +95,12 @@ async function createManyContratLocations(client, valeur) {
 
 }
 
+async function createContratLocations(client, valeur) {
+    const result = await client.db("location").collection("contratLocation").insertOne(valeur);
+    console.log(`Les contrats ont été insérés`);
+
+}
+
 async function getTheMontantAPayer(dateDebut, dateFin, idVehicule) {
 
 }

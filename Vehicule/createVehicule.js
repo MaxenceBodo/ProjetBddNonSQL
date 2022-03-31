@@ -47,3 +47,5 @@ async function createVehicule(client, valeur) {
     const result = await client.db("location").collection("vehicule").insertMany(valeur);
     console.log(`Les vehicules ont été inseré ${result.insertedIds.toString()}`);
 }
+
+module.exports(createVehicule);
