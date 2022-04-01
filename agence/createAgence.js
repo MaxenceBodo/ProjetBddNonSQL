@@ -78,7 +78,7 @@ async function insertAgence(client){
 
 async function createSociete(client, valeur) {
     const result = await client.db("location").collection("agence").insertMany(valeur);
-    console.log(`Les agences ont été inséré. Les IDs: ` + result.insertedIds );
+    console.log(`Les agences ont été inséré`);
 }
 
 module.exports= {insertAgence};

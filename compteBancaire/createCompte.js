@@ -68,7 +68,7 @@ async function insertComptesBancaires(client) {
 
 async function createManyComptes(client, valeur) {
     const result = await client.db("location").collection("compteBancaire").insertMany(valeur);
-    console.log(`Inserted comptes ${result.insertedId}`);
+    console.log(`Les comptes ont été inséré`);
 
 }
 
