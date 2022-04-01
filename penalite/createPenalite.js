@@ -7,7 +7,7 @@ async function insert() {
     try {
         await client.connect();
         // await insertPenalite(client);
-        await checkForPenalites(client);
+        // await checkForPenalites(client);
         // await isVoitureLoue(client, 1);
     } catch (error) {
         console.error(error);
@@ -16,7 +16,7 @@ async function insert() {
     }
 }
 
-insert().catch(console.dir);
+// insert().catch(console.dir);
 
 
 async function insertPenalite(client) {
@@ -43,6 +43,11 @@ async function createPenalite(client, valeur) {
 
 }
 
+async function createOnePenalite(client, valeur) {
+    const result = await client.db("location").collection("penalite").insertOne(valeur);
+    console.log(`Les penalite ont été inserée ${result.insertedId}` );
+
+}
 
 async function checkForPenalites(client) {
     const res = await client.db("location").collection("contratLocation").find({"dateFin": {"$lt": new Date().toISOString()}});
@@ -106,4 +111,4 @@ async function isVoitureLoue(client, idVoiture) {
     }
 }
 
-module.exports = {insertPenalite};
+module.exports = {insertPenalite, createOnePenalite};
