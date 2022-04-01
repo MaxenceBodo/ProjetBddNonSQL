@@ -32,6 +32,15 @@ async function FindAll(client) {
     });
 }
 
+async function Find(client, filtre) {
+    const rx = await client.db('location').collection('personnesMorales').find(filtre);
+    const tax = await rx.toArray();
+    tax.forEach((result) => {
+        console.log(result);
+    });
+}
+
+
 async function findByPays(client,pays){
     const res = await client.db('location').collection("personnesMorales").find({"adresse.pays": pays});
     const arr = await res.toArray();

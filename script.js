@@ -30,7 +30,7 @@ async function main() {
         // //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
         console.log("-----------------------------------------")
         console.log("Suppression des tables")
-        // await deleteV.deleteAll(client);
+        await deleteV.deleteAll(client);
         await deleteA.deleteAll(client);
         await deleteCB.deleteAll(client);
         await deleteCL.deleteAll(client);
@@ -45,7 +45,7 @@ async function main() {
         // //Creation dans la table
         console.log("-----------------------------------------")
         console.log("Creation des tables")
-        // await ajoutVehicule(client);
+        await ajoutVehicule(client);
         await createA.insertAgence(client);
         await createCB.insertComptesBancaires(client);
         await createCL.insertContratLocation(client);
