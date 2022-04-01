@@ -27,46 +27,45 @@ async function main() {
     try {
         // Connexion à mongoDBe
         await client.connect();
-        // //Delete de toutes les données pour eviter les problèmes lors d'un premier lancement
-        // console.log("-----------------------------------------")
-        // console.log("Suppression des tables")
+        // //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
+        console.log("-----------------------------------------")
+        console.log("Suppression des tables")
         // await deleteV.deleteAll(client);
-        // await deleteA.deleteAll(client);
-        // await deleteCB.deleteAll(client);
-        // await deleteCL.deleteAll(client);
-        // await deleteMo.deleteAll(client);
-        // await deletePena.deleteAll(client);
-        // await deletePersMo.deleteAll(client);
-        // await deletePersoPh.deleteAll(client);
-        // await deleteSociete.deleteAll(client);
-        // console.log('\n')
-        // console.log('\n')
+        await deleteA.deleteAll(client);
+        await deleteCB.deleteAll(client);
+        await deleteCL.deleteAll(client);
+        await deleteMo.deleteAll(client);
+        await deletePena.deleteAll(client);
+        await deletePersMo.deleteAll(client);
+        await deletePersoPh.deleteAll(client);
+        await deleteSociete.deleteAll(client);
+        console.log('\n')
+        console.log('\n')
 
         // //Creation dans la table
-        // console.log("-----------------------------------------")
-        // console.log("Creation des tables")
+        console.log("-----------------------------------------")
+        console.log("Creation des tables")
         // await ajoutVehicule(client);
-        // await createA.insertAgence(client);
-        // await createCB.insertComptesBancaires(client);
-        // await createCL.insertContratLocation(client);
-        // await createMo.insertModele(client),
-        // await createPena.insertPenalite(client);
-        // await createPersMo.insertPersonnesMorales(client);
-        // await createPersoPh.insertPersonnesPhysiques(client);
-        // await createSociete.insertSociete(client)
-        // console.log('\n')
-        // console.log('\n')
+        await createA.insertAgence(client);
+        await createCB.insertComptesBancaires(client);
+        await createCL.insertContratLocation(client);
+        await createMo.insertModele(client),
+        await createPena.insertPenalite(client);
+        await createPersMo.insertPersonnesMorales(client);
+        await createPersoPh.insertPersonnesPhysiques(client);
+        await createSociete.insertSociete(client)
+        console.log('\n')
+        console.log('\n')
 
-        // console.log("-----------------------------------------")
-        // console.log("Fonction agregation")
+        console.log("-----------------------------------------")
+        console.log("Fonction agregation")
 
-        // console.log("Deux premiers mois");
-        // await profitDeuxPremiersMois(client);
+        console.log("Deux premiers mois");
+        await profitDeuxPremiersMois(client);
 
-        // console.log("Deux derniers mois");
-        // await profitDeuxDerniersMois(client);
+        console.log("Deux derniers mois");
+        await profitDeuxDerniersMois(client);
 
-        await isVoitureLoue(client,1);
 
     } catch(error){
         console.log(error)
@@ -79,6 +78,76 @@ async function main() {
 
 main().catch(console.error);
 
+/*
+  3. Mettre en place un petit générateur des données pour permettre d'insérer uniquemenet les données des voitures
+*/
+async function ajoutVehicule(client){
+  let ajout;
+  //Ajout SUV
+  for(let i=1; i<51; i++){
+      ajout = {
+          _id:i,
+          prixJour : entierAleatoire(10000,20000),
+          anneMiseEnService:entierAleatoire(2011,2021),
+          kilometrage:entierAleatoire(20000,150000),
+          etatVehicule:"non loue",
+          marque:choixMarque(),
+          modele:1
+      }
+      await createV.createVehiculeOne(client,ajout)
+  }
+
+  //Ajout voiture
+  for(let i=51; i<251; i++){
+      ajout = {
+          _id:i,
+          prixJour : entierAleatoire(10000,20000),
+          anneMiseEnService:entierAleatoire(2011,2021),
+          kilometrage:entierAleatoire(20000,150000),
+          etatVehicule:"non loue",
+          marque:choixMarque(),
+          modele:2
+      }
+      await createV.createVehiculeOne(client,ajout)
+  }
+
+  //Ajout Fourgonette
+  for(let i=251; i<271; i++){
+      ajout = {
+          _id:i,
+          prixJour : entierAleatoire(10000,20000),
+          anneMiseEnService:entierAleatoire(2011,2021),
+          kilometrage:entierAleatoire(20000,150000),
+          etatVehicule:"non loue",
+          marque:choixMarque(),
+          modele:3
+      }
+      await createV.createVehiculeOne(client,ajout)
+  }
+}
+
+//Sert pour varier les donnes dans les vehicules
+function entierAleatoire(min, max){
+  return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+//Sert a choisir aleatoirement une marque pour une plus grande variete dans vehicule
+function choixMarque(){
+  let marque = ["BMW", "Audi", "Tesla", "Peugeot"]
+  return marque[entierAleatoire(0,3)]
+}
+
+/*
+  4.En utilisant un Drivers (Au choix, Java ou NodeJS), ecrire les differentes fonctions qui permettent de faire 
+  les operations du CRUD sur le loueur, le reservant et sur le contrat de location.
+*/
+//Voir dossier './agence', './personne' et './contratLocation'
+
+
+/*
+  5. En utilisant les operateurs d’agregations, ecrire des fonctions via des drivers qui permettent de faire les operations ci-apres
+*/
+//Agregation 1 : Permet aux loueurs de pouvoir calculer ses profits cumul´es sur les deux premiers mois.
 async function profitDeuxPremiersMois(client){
     const test = client.db('location').collection('contratLocation').aggregate([
         {
@@ -102,13 +171,14 @@ async function profitDeuxPremiersMois(client){
     }
 }
 
+//Agregation 2 : Permet aux loueurs de pouvoir calculer ses profits cumul´es sur les deux derniers mois.
 async function profitDeuxDerniersMois(client){
-  console.log(dateInput);
+  console.log(decalageDate(2));
     const test = client.db('location').collection('contratLocation').aggregate([
         {
           '$match': {
             'dateFin': {
-              '$lte': dateInput
+              '$lte': decalageDate(2)
             }
           }
         }, {
@@ -126,94 +196,8 @@ async function profitDeuxDerniersMois(client){
     // console.log("Inséré")
 }
 
-//Fonction permettant d'ajouter des véhicules
-async function ajoutVehicule(client){
-    let ajout;
-    //Ajout SUV
-    for(let i=1; i<51; i++){
-        ajout = {
-            _id:i,
-            prixJour : entierAleatoire(10000,20000),
-            anneMiseEnService:entierAleatoire(2011,2021),
-            kilometrage:entierAleatoire(20000,150000),
-            etatVehicule:"non loue",
-            marque:choixMarque(),
-            modele:1
-        }
-        await createV.createVehiculeOne(client,ajout)
-    }
-
-    //Ajout voiture
-    for(let i=51; i<251; i++){
-        ajout = {
-            _id:i,
-            prixJour : entierAleatoire(10000,20000),
-            anneMiseEnService:entierAleatoire(2011,2021),
-            kilometrage:entierAleatoire(20000,150000),
-            etatVehicule:"non loue",
-            marque:choixMarque(),
-            modele:2
-        }
-        await createV.createVehiculeOne(client,ajout)
-    }
-
-    //Ajout Fourgonette
-    for(let i=251; i<271; i++){
-        ajout = {
-            _id:i,
-            prixJour : entierAleatoire(10000,20000),
-            anneMiseEnService:entierAleatoire(2011,2021),
-            kilometrage:entierAleatoire(20000,150000),
-            etatVehicule:"non loue",
-            marque:choixMarque(),
-            modele:3
-        }
-        await createV.createVehiculeOne(client,ajout)
-    }
+function decalageDate(decalage){
+  let date = new Date();
+  date.setMonth(date.getMonth()-decalage);
+  return date.toISOString();
 }
-
-//calcul penalite => 20% du montant + TVA (20%)
-async function calculerPenalite(client){
-    
-}
-
-// calculer prendre total prix + penalite retard (fonction précédente je pense)
-async function calculerDepenseEntreprise(client){
-  client.db('location').collection('voiture').aggregate([
-    
-  ])
-}
-
-//Sert pour varier les donnes dans les vehicules
-function entierAleatoire(min, max){
-    return Math.floor(Math.random()*(max-min+1))+min;
-}
-
-async function isVoitureLoue(client, idVoiture){
-  const test = client.db('location').collection('vehicule').aggregate([
-    {
-      '$match': {
-        '_id': idVoiture
-      }
-    }, {
-      '$group': {
-        '_id': '$etatVehicule'
-      }
-    }
-  ])
-  for await(const doc of test){
-    if(doc["_id"]=="loue") return true; else return false;
-  }
-}
-
-//Sert a choisir aleatoirement une marque pour une plus grande variete dans 
-//vehicule
-function choixMarque(){
-    let marque = ["BMW", "Audi", "Tesla", "Peugeot"]
-    return marque[entierAleatoire(0,3)]
-}
-
-//Permet d'avoir la date du jour -2 mois
-let date = new Date();
-(date.setMonth(date.getMonth()-2));
-let dateInput = date.toLocaleDateString();

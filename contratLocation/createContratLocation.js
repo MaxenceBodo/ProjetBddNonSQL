@@ -14,13 +14,13 @@ async function insert() {
     }
 }
 
-insert().catch(console.dir);
+// insert().catch(console.dir);
 
 async function insertContratLocation(client) {
     await createManyContratLocations(client, [
             {
                 _id: 1,
-                dateDebut: new Date("2022-01-01").toISOString(), //YYYY-mm-dd
+                dateDebut: new Date("2022-03-01").toISOString(), //YYYY-mm-dd
                 dateFin: new Date("2022-04-01").toISOString(),
                 montantAPayer: 5000,
                 personne: {
@@ -37,8 +37,8 @@ async function insertContratLocation(client) {
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 2,
-                dateDebut: new Date("2021-09-13").toISOString(), //YYYY-mm-dd
-                dateFin: new Date("2021-09-15").toISOString(),
+                dateDebut: new Date("2021-10-13").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2021-10-15").toISOString(),
                 montantAPayer: 5000,
                 personne: {
                     idPersonne: 2,
@@ -71,8 +71,8 @@ async function insertContratLocation(client) {
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 4,
-                dateDebut: new Date("2019-02-23").toISOString(), //YYYY-mm-dd
-                dateFin: new Date("2019-02-28").toISOString(),
+                dateDebut: new Date("2021-11-23").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2021-11-28").toISOString(),
                 montantAPayer: 5000,
                 personne: {
                     idPersonne: 1,
@@ -88,8 +88,8 @@ async function insertContratLocation(client) {
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 5,
-                dateDebut: new Date("2022-02-22").toISOString(), //YYYY-mm-dd
-                dateFin: new Date("2022-02-23").toISOString(),
+                dateDebut: new Date("2022-03-22").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2022-03-23").toISOString(),
                 montantAPayer: 5000,
                 personne: {
                     idPersonne: 3,
