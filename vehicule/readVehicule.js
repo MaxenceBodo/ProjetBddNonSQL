@@ -28,7 +28,7 @@ async function Read() {
 
 }
 
-Read().catch(console.dir);
+// Read().catch(console.dir);
 
 async function findAll(client) {
     const rx = await db.find();

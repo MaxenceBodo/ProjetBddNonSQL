@@ -18,7 +18,7 @@ async function Update() {
     }
 }
 
-Update().catch(console.dir);
+// Update().catch(console.dir);
 
 async function updateById(filtre, updatedDoc) {
     const res = await db.updateOne(filtre, {$set: updatedDoc});
@@ -47,3 +47,5 @@ async function setStatusVehiculeNonLoue(id) {
     let res = await db.updateOne({"_id": id}, {$set: {"etatVehicule": "non loue"}});
     console.log(`${res.modifiedCount} mis a jour`);
 }
+
+module.exports = {changeStatusVehicule};
