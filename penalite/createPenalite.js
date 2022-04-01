@@ -7,6 +7,7 @@ async function insert() {
         await client.connect();
         // await insertPenalite(client);
         await checkForPenalites(client);
+        // await isVoitureLoue(client, 1);
     } catch (error) {
         console.error(error);
     } finally {
@@ -45,9 +46,33 @@ async function createPenalite(client, valeur) {
 async function checkForPenalites(client) {
     const res = await client.db("location").collection("contratLocation").find({"dateFin": {"$lt": new Date().toISOString()}});
     const tax = await res.toArray();
-    tax.forEach((result) => {
-        console.log(result);
-    });
+    for (const result of tax) {
+        // console.log(result.vehicule);
+        for (let i = 0; i < result.vehicule.SUV.length; i++) {
+            // console.log(result.vehicule.SUV[i]);
+            const suvResult = await client.db("location").collection("vehicule").findOne({"_id": result.vehicule.SUV[i]});
+            console.log(suvResult);
+        }
+    }
+
+
+}
+
+async function isVoitureLoue(client, idVoiture) {
+    const test = client.db('location').collection('vehicule').aggregate([
+        {
+            '$match': {
+                'modele': 2
+            }
+        }, {
+            '$group': {
+                '_id': '$etatVehicule'
+            }
+        }
+    ]);
+    for await (let doc of test) {
+        console.log(doc);
+    }
 }
 
 module.exports = {insertPenalite};

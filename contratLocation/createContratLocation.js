@@ -14,7 +14,7 @@ async function insert() {
     }
 }
 
-// insert().catch(console.dir);
+insert().catch(console.dir);
 
 async function insertContratLocation(client) {
     await createManyContratLocations(client, [
@@ -28,7 +28,11 @@ async function insertContratLocation(client) {
                     typePersonne: "morale"
                 },
                 agence: 3,
-                vehicule: 2,
+                vehicule: {
+                    "SUV": [10, 12, 17, 19],
+                    "voiture": [],
+                    "fourgonettes": []
+                },
                 penalite: [],
                 clauseLocation: "Texte tres long"
             }, {
@@ -41,7 +45,11 @@ async function insertContratLocation(client) {
                     typePersonne: "morale"
                 },
                 agence: 3,
-                vehicule: 1,
+                vehicule: {
+                    "SUV": [45],
+                    "voiture": [68],
+                    "fourgonettes": []
+                },
                 penalite: [],
                 clauseLocation: "Texte tres long"
             }, {
@@ -54,7 +62,11 @@ async function insertContratLocation(client) {
                     typePersonne: "physique"
                 },
                 agence: 1,
-                vehicule: 1,
+                vehicule: {
+                    "SUV": [32],
+                    "voiture": [67],
+                    "fourgonettes": []
+                },
                 penalite: [],
                 clauseLocation: "Texte tres long"
             }, {
@@ -67,7 +79,11 @@ async function insertContratLocation(client) {
                     typePersonne: "physique"
                 },
                 agence: 4,
-                vehicule: 3,
+                vehicule: {
+                    "SUV": [],
+                    "voiture": [79, 80],
+                    "fourgonettes": []
+                },
                 penalite: [],
                 clauseLocation: "Texte tres long"
             }, {
@@ -80,7 +96,11 @@ async function insertContratLocation(client) {
                     typePersonne: "physique"
                 },
                 agence: 2,
-                vehicule: 3,
+                vehicule: {
+                    "SUV": [],
+                    "voiture": [81, 82, 83, 84, 85],
+                    "fourgonettes": [252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263]
+                },
                 penalite: [1],
                 clauseLocation: "Texte tres long"
             }
