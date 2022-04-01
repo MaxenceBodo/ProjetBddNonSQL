@@ -27,46 +27,45 @@ async function main() {
     try {
         // Connexion à mongoDBe
         await client.connect();
-        // //Delete de toutes les données pour eviter les problèmes lors d'un premier lancement
-        // console.log("-----------------------------------------")
-        // console.log("Suppression des tables")
-        // await deleteV.deleteAll(client);
-        // await deleteA.deleteAll(client);
-        // await deleteCB.deleteAll(client);
-        // await deleteCL.deleteAll(client);
-        // await deleteMo.deleteAll(client);
-        // await deletePena.deleteAll(client);
-        // await deletePersMo.deleteAll(client);
-        // await deletePersoPh.deleteAll(client);
-        // await deleteSociete.deleteAll(client);
-        // console.log('\n')
-        // console.log('\n')
+        // //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
+        console.log("-----------------------------------------")
+        console.log("Suppression des tables")
+        await deleteV.deleteAll(client);
+        await deleteA.deleteAll(client);
+        await deleteCB.deleteAll(client);
+        await deleteCL.deleteAll(client);
+        await deleteMo.deleteAll(client);
+        await deletePena.deleteAll(client);
+        await deletePersMo.deleteAll(client);
+        await deletePersoPh.deleteAll(client);
+        await deleteSociete.deleteAll(client);
+        console.log('\n')
+        console.log('\n')
 
         // //Creation dans la table
-        // console.log("-----------------------------------------")
-        // console.log("Creation des tables")
-        // await ajoutVehicule(client);
-        // await createA.insertAgence(client);
-        // await createCB.insertComptesBancaires(client);
-        // await createCL.insertContratLocation(client);
-        // await createMo.insertModele(client),
-        // await createPena.insertPenalite(client);
-        // await createPersMo.insertPersonnesMorales(client);
-        // await createPersoPh.insertPersonnesPhysiques(client);
-        // await createSociete.insertSociete(client)
-        // console.log('\n')
-        // console.log('\n')
+        console.log("-----------------------------------------")
+        console.log("Creation des tables")
+        await ajoutVehicule(client);
+        await createA.insertAgence(client);
+        await createCB.insertComptesBancaires(client);
+        await createCL.insertContratLocation(client);
+        await createMo.insertModele(client),
+        await createPena.insertPenalite(client);
+        await createPersMo.insertPersonnesMorales(client);
+        await createPersoPh.insertPersonnesPhysiques(client);
+        await createSociete.insertSociete(client)
+        console.log('\n')
+        console.log('\n')
 
-        // console.log("-----------------------------------------")
-        // console.log("Fonction agregation")
+        console.log("-----------------------------------------")
+        console.log("Fonction agregation")
 
-        // console.log("Deux premiers mois");
-        // await profitDeuxPremiersMois(client);
+        console.log("Deux premiers mois");
+        await profitDeuxPremiersMois(client);
 
-        // console.log("Deux derniers mois");
-        // await profitDeuxDerniersMois(client);
+        console.log("Deux derniers mois");
+        await profitDeuxDerniersMois(client);
 
-        await isVoitureLoue(client,1);
 
     } catch(error){
         console.log(error)
@@ -187,23 +186,6 @@ async function calculerDepenseEntreprise(client){
 //Sert pour varier les donnes dans les vehicules
 function entierAleatoire(min, max){
     return Math.floor(Math.random()*(max-min+1))+min;
-}
-
-async function isVoitureLoue(client, idVoiture){
-  const test = client.db('location').collection('vehicule').aggregate([
-    {
-      '$match': {
-        '_id': idVoiture
-      }
-    }, {
-      '$group': {
-        '_id': '$etatVehicule'
-      }
-    }
-  ])
-  for await(const doc of test){
-    if(doc["_id"]=="loue") return true; else return false;
-  }
 }
 
 //Sert a choisir aleatoirement une marque pour une plus grande variete dans 
