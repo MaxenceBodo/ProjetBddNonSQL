@@ -24,3 +24,11 @@ async function Find(client) {
         console.log(result);
     });
 }
+
+async function Find(client,filtre) {
+    const rx = await client.db('location').collection('agence').find(filtre);
+    const tax = await rx.toArray();
+    tax.forEach((result) => {
+        console.log(result);
+    });
+}
