@@ -28,22 +28,21 @@ async function updateById(filtre, updatedDoc) {
 }
 
 async function changeStatusVehicule(id) {
-    const etat = await getVehicule.getEtatVehicule(client, id);
-    console.log(etat);
+    const etat = await getVehicule.getEtatVehicule(id);
 
     if (etat.etatVehicule === "non loue") await setStatusVehiculeLoue(id);
     else await setStatusVehiculeNonLoue(id);
 
-    console.log(etat.etatVehicule);
-
 }
 
 async function setStatusVehiculeLoue(id) {
+    await client.connect();
     let res = await db.updateOne({"_id": id}, {$set: {"etatVehicule": "loue"}});
     console.log(`${res.modifiedCount} mis a jour`);
 }
 
 async function setStatusVehiculeNonLoue(id) {
+    await client.connect();
     let res = await db.updateOne({"_id": id}, {$set: {"etatVehicule": "non loue"}});
     console.log(`${res.modifiedCount} mis a jour`);
 }

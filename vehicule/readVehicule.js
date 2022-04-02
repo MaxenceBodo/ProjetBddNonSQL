@@ -51,12 +51,21 @@ async function findById(id) {
     console.log(res)
 }
 
-async function getEtatVehicule(client, id) {
-    // await client.connect();
+async function getEtatVehicule(id) {
+    await client.connect();
     // const db = client.db('location').collection('vehicule');
-    const res = await client.db('location').collection('vehicule').findOne({"_id": id},{projection: {"_id": 0, "etatVehicule":1}});
-    return res;
+    return await client.db('location').collection('vehicule').findOne({"_id": id}, {
+        projection: {
+            "_id": 0,
+            "etatVehicule": 1
+        }
+    });
 
 }
 
-module.exports = {getEtatVehicule};
+async function getManyVehiculesById(client, arrayId) {
+    const res = await client.db("location").collection("vehicule").find({"_id": {"$in": arrayId}});
+    return res.toArray();
+}
+
+module.exports = {getEtatVehicule, getManyVehiculesById};

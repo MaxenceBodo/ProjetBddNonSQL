@@ -22,7 +22,6 @@ async function insertContratLocation(client) {
                 _id: 1,
                 dateDebut: new Date("2022-03-01").toISOString(), //YYYY-mm-dd
                 dateFin: new Date("2022-04-01").toISOString(),
-                montantAPayer: 5000,
                 personne: {
                     idPersonne: 1,
                     typePersonne: "morale"
@@ -33,13 +32,11 @@ async function insertContratLocation(client) {
                     "voiture": [],
                     "fourgonettes": []
                 },
-                penalite: [],
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 2,
                 dateDebut: new Date("2021-10-13").toISOString(), //YYYY-mm-dd
                 dateFin: new Date("2021-10-15").toISOString(),
-                montantAPayer: 5000,
                 personne: {
                     idPersonne: 2,
                     typePersonne: "morale"
@@ -50,13 +47,11 @@ async function insertContratLocation(client) {
                     "voiture": [68],
                     "fourgonettes": []
                 },
-                penalite: [],
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 3,
                 dateDebut: new Date("2022-01-13").toISOString(), //YYYY-mm-dd
                 dateFin: new Date("2022-02-23").toISOString(),
-                montantAPayer: 5000,
                 personne: {
                     idPersonne: 1,
                     typePersonne: "physique"
@@ -67,13 +62,11 @@ async function insertContratLocation(client) {
                     "voiture": [67],
                     "fourgonettes": []
                 },
-                penalite: [],
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 4,
                 dateDebut: new Date("2021-11-23").toISOString(), //YYYY-mm-dd
                 dateFin: new Date("2021-11-28").toISOString(),
-                montantAPayer: 5000,
                 personne: {
                     idPersonne: 1,
                     typePersonne: "physique"
@@ -84,13 +77,11 @@ async function insertContratLocation(client) {
                     "voiture": [79, 80],
                     "fourgonettes": []
                 },
-                penalite: [],
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 5,
                 dateDebut: new Date("2022-03-22").toISOString(), //YYYY-mm-dd
                 dateFin: new Date("2022-03-23").toISOString(),
-                montantAPayer: 5000,
                 personne: {
                     idPersonne: 3,
                     typePersonne: "physique"
@@ -101,7 +92,6 @@ async function insertContratLocation(client) {
                     "voiture": [81, 82, 83, 84, 85],
                     "fourgonettes": [252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263]
                 },
-                penalite: [1],
                 clauseLocation: "Texte tres long"
             }
         ]
@@ -117,7 +107,7 @@ async function createManyContratLocations(client, valeur) {
 
 async function createContratLocations(client, valeur) {
     const result = await client.db("location").collection("contratLocation").insertOne(valeur);
-    console.log(`Le contrats a été inséré`);
+    console.log(`Le contrat a été inséré avec l'id ${result.insertedId}`);
 
 }
 
@@ -130,4 +120,4 @@ async function getPrixJourVehicule(idVehicule) {
 
 }
 
-module.exports = {insertContratLocation}
+module.exports = {insertContratLocation, createContratLocations}

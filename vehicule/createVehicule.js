@@ -18,7 +18,6 @@ async function insert(){
 async function insertVehicule(client){
     await createVehicule(client,[{
         _id:1,
-        prixJour : 20000,
         anneeMiseEnService:2017,
         kilometrage:76524,
         etatVehicule:"non loue",
@@ -26,18 +25,16 @@ async function insertVehicule(client){
         modele:2
     },{
         _id:2,
-        prixJour : 15312,
         anneeMiseEnService:2015,
         kilometrage:102365,
-        etatVehicule:"loue",
+        etatVehicule:"non loue",
         marque:"Audi",
         modele:1
     },{
         _id:3,
-        prixJour :8500,
         anneeMiseEnService:2007,
         kilometrage:251325,
-        etatVehicule:"loue",
+        etatVehicule:"non loue",
         marque:"Tesla",
         modele:3
     }])

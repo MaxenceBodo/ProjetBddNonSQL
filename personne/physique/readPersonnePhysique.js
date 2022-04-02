@@ -17,7 +17,7 @@ async function Read() {
 
 }
 
-Read().catch(console.dir);
+// Read().catch(console.dir);
 
 
 async function findByname(client, name) {
@@ -52,3 +52,13 @@ async function findByVille(client, ville) {
 }
 
 
+async function findById(client, idPersonne) {
+    return await client.db('location').collection('personnesPhysiques').findOne({"_id": idPersonne});
+
+}
+
+async function checkIfPersonneExists(client, idPersonne) {
+    return await findById(client, idPersonne) !== null;
+}
+
+module.exports = {checkIfPersonneExists};
