@@ -11,6 +11,7 @@ const readVehicule = require("./../vehicule/readVehicule");
 const penalite = require("./../penalite/createPenalite");
 const personneMorale = require("./../personne/morale/readPersonneMorale");
 const personnePhysique = require("./../personne/physique/readPersonnePhysique");
+const facture = require("./../facture/createFacture");
 
 const TVA = 0.2;
 
@@ -19,8 +20,8 @@ async function main() {
         await client.connect();
         // await rendreVehicule(client, 2);
         // await louerVehicule(client, 1, "morale", 1, 1, 1);
-        // await louerVehicule(client, 1, "physique", [1, 2, 4, 81, 141, 253], "2022/03/20", "2022/03/31", 3)
-        await rendreVehicule(client, new ObjectId("624895e291720fac86ea5aa5"))
+        await louerVehicule(client, 1, "physique", [1, 2, 4, 81, 141, 253], "2022/03/20", "2022/03/31", 3)
+        // await rendreVehicule(client, new ObjectId("6248a5eeaee315ef7ae92c3e"))
     } catch (error) {
         console.error(error);
     } finally {
@@ -64,6 +65,17 @@ async function changeVehiculeStatus(vehicules) {
         vehicule.changeStatusVehicule(idVehicule);
     })
 }
+
+async function calculerMontantFacture(client, vehicules, nbDeJours) {
+    let vehiculesALouer = await getVehiculesNonLoue(client, vehicules);
+    let total = 0;
+    vehiculesALouer.forEach((vehicule) => {
+        total += (vehicule.modele.prixJour * nbDeJours);
+    });
+
+    return total;
+}
+
 
 async function joursDePenalite(idContrat) {
     let res = await client.db("location").collection("contratLocation").findOne({
@@ -156,6 +168,8 @@ async function louerVehicule(client, idPersonne, typePersonne, vehiculesId, date
     };
     let vehiculesNonLoues = await getVehiculesNonLoue(client, vehiculesId);
 
+    console.log(vehiculesNonLoues);
+
     vehiculesNonLoues.forEach((res) => {
         if (res.modele.nom === "SUV") vehicules.SUV.push(res._id);
         if (res.modele.nom === "voiture") vehicules.voiture.push(res._id);
@@ -176,12 +190,21 @@ async function louerVehicule(client, idPersonne, typePersonne, vehiculesId, date
         clauseLocation: "Texte tres long"
     };
 
-    await createContrat.createContratLocations(client, valeur);
-    //
+    let contratId = await createContrat.createContratLocations(client, valeur);
+    // //
     await changeVehiculeStatus(vehicules.SUV);
     await changeVehiculeStatus(vehicules.voiture);
     await changeVehiculeStatus(vehicules.fourgonettes);
 
+    let montantFacture = await calculerMontantFacture(client, vehiculesId, utils.getDaysDifferenceOfTwoDates(valeur.dateDebut, valeur.dateFin));
+
+    let valeurFacture = {
+        idContrat: contratId,
+        montant: montantFacture,
+        dateFacture: new Date().toISOString()
+    };
+
+    await facture.createOneFacture(client, valeurFacture);
     return "Le contrat a ete cree"
 }
 

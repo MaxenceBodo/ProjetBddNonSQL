@@ -113,6 +113,7 @@ async function createManyContratLocations(client, valeur) {
 async function createContratLocations(client, valeur) {
     const result = await client.db("location").collection("contratLocation").insertOne(valeur);
     console.log(`Le contrat a été inséré avec l'id ${result.insertedId}`);
+    return result.insertedId;
 
 }
 
