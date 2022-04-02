@@ -28,43 +28,45 @@ async function main() {
         // Connexion à mongoDBe
         await client.connect();
         // //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
-        console.log("-----------------------------------------")
-        console.log("Suppression des tables")
-        await deleteV.deleteAll(client);
-        await deleteA.deleteAll(client);
-        await deleteCB.deleteAll(client);
-        await deleteCL.deleteAll(client);
-        await deleteMo.deleteAll(client);
-        await deletePena.deleteAll(client);
-        await deletePersMo.deleteAll(client);
-        await deletePersoPh.deleteAll(client);
-        await deleteSociete.deleteAll(client);
-        console.log('\n')
-        console.log('\n')
+        // console.log("-----------------------------------------")
+        // console.log("Suppression des tables")
+        // await deleteV.deleteAll(client);
+        // await deleteA.deleteAll(client);
+        // await deleteCB.deleteAll(client);
+        // await deleteCL.deleteAll(client);
+        // await deleteMo.deleteAll(client);
+        // await deletePena.deleteAll(client);
+        // await deletePersMo.deleteAll(client);
+        // await deletePersoPh.deleteAll(client);
+        // await deleteSociete.deleteAll(client);
+        // console.log('\n')
+        // console.log('\n')
 
-        // //Creation dans la table
-        console.log("-----------------------------------------")
-        console.log("Creation des tables")
-        await ajoutVehicule(client);
-        await createA.insertAgence(client);
-        await createCB.insertComptesBancaires(client);
-        await createCL.insertContratLocation(client);
-        await createMo.insertModele(client),
-        await createPena.insertPenalite(client);
-        await createPersMo.insertPersonnesMorales(client);
-        await createPersoPh.insertPersonnesPhysiques(client);
-        await createSociete.insertSociete(client)
-        console.log('\n')
-        console.log('\n')
+        // // //Creation dans la table
+        // console.log("-----------------------------------------")
+        // console.log("Creation des tables")
+        // await ajoutVehicule(client);
+        // await createA.insertAgence(client);
+        // await createCB.insertComptesBancaires(client);
+        // await createCL.insertContratLocation(client);
+        // await createMo.insertModele(client),
+        // await createPena.insertPenalite(client);
+        // await createPersMo.insertPersonnesMorales(client);
+        // await createPersoPh.insertPersonnesPhysiques(client);
+        // await createSociete.insertSociete(client)
+        // console.log('\n')
+        // console.log('\n')
 
-        console.log("-----------------------------------------")
-        console.log("Fonction agregation")
+        // console.log("-----------------------------------------")
+        // console.log("Fonction agregation")
 
-        console.log("Deux premiers mois");
-        await profitDeuxPremiersMois(client);
+        // console.log("Deux premiers mois");
+        // await profitDeuxPremiersMois(client);
 
-        console.log("Deux derniers mois");
-        await profitDeuxDerniersMois(client);
+        // console.log("Deux derniers mois");
+        // await profitDeuxDerniersMois(client);
+
+        await agregation(client, 3)
 
 
     } catch(error){
@@ -193,11 +195,41 @@ async function profitDeuxDerniersMois(client){
       for await(const doc of test){
         console.log(doc);
     }
-    // console.log("Inséré")
 }
 
 function decalageDate(decalage){
   let date = new Date();
   date.setMonth(date.getMonth()-decalage);
   return date.toISOString();
+}
+
+
+
+async function agregation(client,idLocation){
+  const test1 = client.db('location').collection('contratLocation').find({_id:idLocation},{_id:0,vehicule:1});
+  const priceSUV = await client.db('location').collection('modele').find({nom:"SUV"});
+  const priceVoiture = client.db('location').collection('modele').find({nom:"voiture"});
+  const priceFourgonette = client.db('location').collection('modele').find({nom:"fourgonette"});
+
+  let listeVoiture;
+  let prixSuv;
+  let prixVoiture;
+  let prixFourgonette;
+
+  for await(const doc of test1){
+    listeVoiture = doc["vehicule"]
+  }
+
+  for await(const doc of priceSUV){
+    prixSuv = doc["prixModele"]
+  }
+  for await(const doc of priceVoiture){
+    prixVoiture = doc["prixModele"]
+  }
+  for await(const doc of priceFourgonette){
+    prixFourgonette = doc["prixModele"]
+  }
+
+  let totalSansPenalite = listeVoiture["SUV"].length*prixSuv + listeVoiture["voiture"].length*prixVoiture+listeVoiture["fourgonettes"].length*prixFourgonette;
+  console.log("total =", total)
 }
