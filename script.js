@@ -11,6 +11,7 @@ const createPena = require('./penalite/createPenalite');
 const createPersMo = require('./personne/morale/createPersonneMorale');
 const createPersoPh = require('./personne/physique/createPersonnePhysique');
 const createSociete = require('./societe/createSociete');
+const createF = require('./facture/createFacture');
 
 const deleteV = require('./vehicule/deleteVehicule');
 const deleteA = require('./agence/deleteAgence');
@@ -21,13 +22,14 @@ const deletePena = require('./penalite/deletePenalite');
 const deletePersMo = require('./personne/morale/deletePersonneMorale');
 const deletePersoPh = require('./personne/physique/deletePersonnePhysique');
 const deleteSociete = require('./societe/deleteSociete');
+const deleteF = require('./facture/deleteFacture')
 
 async function main() {
 
     try {
         // Connexion à mongoDBe
         await client.connect();
-        // //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
+        //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
         console.log("-----------------------------------------")
         console.log("Suppression des tables")
         await deleteV.deleteAll(client);
@@ -39,26 +41,28 @@ async function main() {
         await deletePersMo.deleteAll(client);
         await deletePersoPh.deleteAll(client);
         await deleteSociete.deleteAll(client);
-        console.log('\n')
-        console.log('\n')
+        await deleteF.deleteAll(client);
+        console.log('\n');
+        console.log('\n');
 
-        // //Creation dans la table
-        console.log("-----------------------------------------")
-        console.log("Creation des tables")
+        //Creation dans la table
+        console.log("-----------------------------------------");
+        console.log("Creation des tables");
         await ajoutVehicule(client);
         await createA.insertAgence(client);
         await createCB.insertComptesBancaires(client);
         await createCL.insertContratLocation(client);
-        await createMo.insertModele(client),
+        await createMo.insertModele(client);
             await createPena.insertPenalite(client);
         await createPersMo.insertPersonnesMorales(client);
         await createPersoPh.insertPersonnesPhysiques(client);
-        await createSociete.insertSociete(client)
-        console.log('\n')
-        console.log('\n')
+        await createSociete.insertSociete(client);
+        await createF.insertFacture(client);
+        console.log('\n');
+        console.log('\n');
 
-        console.log("-----------------------------------------")
-        console.log("Fonction agregation")
+        console.log("-----------------------------------------");
+        console.log("Fonction agregation");
 
         console.log("Deux premiers mois");
         await profitDeuxPremiersMois(client);
