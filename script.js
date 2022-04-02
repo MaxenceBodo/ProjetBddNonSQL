@@ -27,7 +27,7 @@ async function main() {
     try {
         // Connexion à mongoDBe
         await client.connect();
-        // //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
+        //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
         console.log("-----------------------------------------")
         console.log("Suppression des tables")
         await deleteV.deleteAll(client);
@@ -42,7 +42,7 @@ async function main() {
         console.log('\n')
         console.log('\n')
 
-        // //Creation dans la table
+        //Creation dans la table
         console.log("-----------------------------------------")
         console.log("Creation des tables")
         await ajoutVehicule(client);
