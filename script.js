@@ -202,11 +202,41 @@ async function profitDeuxDerniersMois(client) {
     for await(const doc of test) {
         console.log(doc);
     }
-    // console.log("Inséré")
 }
 
 function decalageDate(decalage) {
     let date = new Date();
     date.setMonth(date.getMonth() - decalage);
     return date.toISOString();
+}
+
+
+
+async function agregation(client,idLocation){
+  const test1 = client.db('location').collection('contratLocation').find({_id:idLocation},{_id:0,vehicule:1});
+  const priceSUV = await client.db('location').collection('modele').find({nom:"SUV"});
+  const priceVoiture = client.db('location').collection('modele').find({nom:"voiture"});
+  const priceFourgonette = client.db('location').collection('modele').find({nom:"fourgonette"});
+
+  let listeVoiture;
+  let prixSuv;
+  let prixVoiture;
+  let prixFourgonette;
+
+  for await(const doc of test1){
+    listeVoiture = doc["vehicule"]
+  }
+
+  for await(const doc of priceSUV){
+    prixSuv = doc["prixModele"]
+  }
+  for await(const doc of priceVoiture){
+    prixVoiture = doc["prixModele"]
+  }
+  for await(const doc of priceFourgonette){
+    prixFourgonette = doc["prixModele"]
+  }
+
+  let totalSansPenalite = listeVoiture["SUV"].length*prixSuv + listeVoiture["voiture"].length*prixVoiture+listeVoiture["fourgonettes"].length*prixFourgonette;
+  console.log("total =", total)
 }
