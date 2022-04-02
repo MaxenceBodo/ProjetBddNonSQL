@@ -5,6 +5,7 @@ const client = new MongoClient(uri);
 const utils = require("./../utils/utils");
 const contrat = require("./../contratLocation/readContratLocation");
 const createContrat = require("./../contratLocation/createContratLocation");
+const updateContrat = require("./../contratLocation/updateContraLocation");
 const vehicule = require("./../vehicule/updateVehicule");
 const readVehicule = require("./../vehicule/readVehicule");
 const penalite = require("./../penalite/createPenalite");
@@ -18,8 +19,8 @@ async function main() {
         await client.connect();
         // await rendreVehicule(client, 2);
         // await louerVehicule(client, 1, "morale", 1, 1, 1);
-        // await louerVehicule(client, 1, "physique", [1, 2, 4, 81, 141, 252], "2022/04/02", "2022/04/10", 3)
-        await rendreVehicule(client, new ObjectId("62487e176b172aaf254ad46e"))
+        // await louerVehicule(client, 1, "physique", [1, 2, 4, 81, 141, 253], "2022/03/20", "2022/03/31", 3)
+        await rendreVehicule(client, new ObjectId("624895e291720fac86ea5aa5"))
     } catch (error) {
         console.error(error);
     } finally {
@@ -30,9 +31,14 @@ async function main() {
 main().catch(console.dir);
 
 async function rendreVehicule(client, idContrat) {
+    if (await contrat.getEtatContrat(idContrat) === "termine") {
+        console.log(`Le contrat ${idContrat} est deja termine`);
+        return
+    }
+
     let resContrat = await contrat.findById(idContrat);
 
-    // console.log(res);
+    console.log(resContrat);
     let joursDeRetard = await joursDePenalite(idContrat);
     if (joursDeRetard !== 0) {
         let penaliteData = {
@@ -42,6 +48,15 @@ async function rendreVehicule(client, idContrat) {
         };
         await penalite.createOnePenalite(client, penaliteData);
     }
+
+    await changeVehiculeStatus(resContrat.vehicule.SUV);
+    await changeVehiculeStatus(resContrat.vehicule.voiture);
+    await changeVehiculeStatus(resContrat.vehicule.fourgonettes);
+
+    await updateContrat.setEtatContratTermine(client, idContrat);
+    console.log(`Les vehicules du contrat ${resContrat._id} rendus`)
+
+
 }
 
 async function changeVehiculeStatus(vehicules) {
@@ -56,9 +71,12 @@ async function joursDePenalite(idContrat) {
         "dateFin": {"$lt": new Date().toISOString()}
     });
     // console.log(res);
-    if (res !== null)
-        return utils.getDaysDifferenceFromToday(res.dateFin);
-
+    if (res !== null) {
+        let diff = utils.getDaysDifferenceFromToday(res.dateFin);
+        console.log(`Contrat avec l'id ${idContrat} -> penalite de ${diff} jours`);
+        return diff;
+    }
+    console.log(`Contrat avec l'id ${idContrat} -> pas de penalite`);
     return 0;
 }
 
@@ -154,6 +172,7 @@ async function louerVehicule(client, idPersonne, typePersonne, vehiculesId, date
         },
         agence: idAgence,
         vehicule: vehicules,
+        etatContrat: "en cours",
         clauseLocation: "Texte tres long"
     };
 

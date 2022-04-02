@@ -32,6 +32,7 @@ async function insertContratLocation(client) {
                     "voiture": [],
                     "fourgonettes": []
                 },
+                etatContrat: "en cours",
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 2,
@@ -47,6 +48,7 @@ async function insertContratLocation(client) {
                     "voiture": [68],
                     "fourgonettes": []
                 },
+                etatContrat: "en cours",
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 3,
@@ -62,6 +64,7 @@ async function insertContratLocation(client) {
                     "voiture": [67],
                     "fourgonettes": []
                 },
+                etatContrat: "en cours",
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 4,
@@ -77,6 +80,7 @@ async function insertContratLocation(client) {
                     "voiture": [79, 80],
                     "fourgonettes": []
                 },
+                etatContrat: "en cours",
                 clauseLocation: "Texte tres long"
             }, {
                 _id: 5,
@@ -92,6 +96,7 @@ async function insertContratLocation(client) {
                     "voiture": [81, 82, 83, 84, 85],
                     "fourgonettes": [252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263]
                 },
+                etatContrat: "en cours",
                 clauseLocation: "Texte tres long"
             }
         ]
