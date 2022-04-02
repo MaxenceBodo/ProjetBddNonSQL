@@ -1,20 +1,24 @@
 const {MongoClient} = require("mongodb");
 const uri = "mongodb+srv://sorbonne:1234@location.2tudd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
+const ObjectID = require('mongodb').ObjectID;
 
 
 let db = client.db('location').collection("contratLocation");
+
 async function Read() {
     try {
         await client.connect();
         console.log("Affiche toutes les contrats de locations");
         await FindAll(client);
-        
+
         console.log("___________________________________________________________")
 
         console.log("Affiche les contrats de location entre deux dates");
-        await findByDate(client, "2022-01-01","2022-03-20");
+        // await findByDate(client, "2022-01-01","2022-03-20");
 
+        console.log("find by id");
+        await findById(id);
     } catch (error) {
         console.error(error);
     } finally {
@@ -22,6 +26,7 @@ async function Read() {
     }
 
 }
+
 // Read().catch(console.dir);
 
 async function FindAll(client) {
@@ -40,8 +45,8 @@ async function FindAll(client, filtre) {
     });
 }
 
-async function findByDate(client,dateDebut, dateFin){
-    const res = await db.find({"dateDebut":{"$gte":dateDebut},"dateFin":{"$lte":dateFin}});
+async function findByDate(client, dateDebut, dateFin) {
+    const res = await db.find({"dateDebut": {"$gte": dateDebut}, "dateFin": {"$lte": dateFin}});
     const arr = await res.toArray();
     arr.forEach((result) => {
         console.log(result);
@@ -50,7 +55,9 @@ async function findByDate(client,dateDebut, dateFin){
 
 async function findById(idContrat) {
     await client.connect();
-    return await db.findOne({"_id": idContrat});
+    let res = await db.findOne({"_id": idContrat});
+    console.log(res);
+    return res;
 }
 
 module.exports = {findById};
