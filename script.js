@@ -242,12 +242,6 @@ async function coutTotal(client, idContrat) {
                 'preserveNullAndEmptyArrays': true
             }
         },
-        // {
-        //     '$project':{
-        //         'somme' : '$montant',
-        //         'penalite': {'$ifNull':['$penalite.sommePenalite',0]}
-        //     }
-        // },
         {
             "$group": {
                 _id: 0,

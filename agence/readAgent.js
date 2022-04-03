@@ -17,7 +17,7 @@ async function Read() {
 }
 Read().catch(console.dir);
 
-async function Find(client) {
+async function findAll(client) {
     const rx = await client.db('location').collection('agence').find();
     const tax = await rx.toArray();
     tax.forEach((result) => {
@@ -25,7 +25,7 @@ async function Find(client) {
     });
 }
 
-async function Find(client,filtre) {
+async function find(client,filtre) {
     const rx = await client.db('location').collection('agence').find(filtre);
     const tax = await rx.toArray();
     tax.forEach((result) => {

@@ -16,8 +16,8 @@ Update().catch(console.dir);
 
 async function updateById(client, id, updatedDoc) {
     const res = await client.db('location').collection('agence').updateOne(
-        {_id: id}, {$set: updatedDoc});
-
+        {_id: id}, {$set: updatedDoc}
+    );
     console.log(`${res.matchedCount} documents trouves`);
     console.log(`${res.modifiedCount} mis a jour`);
 }
