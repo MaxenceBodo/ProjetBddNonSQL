@@ -5,7 +5,7 @@ function getDaysDifferenceFromToday(date) {
 }
 function getDaysDifferenceOfTwoDates(date1, date2) {
     const diffInMilliseconds = new Date(date1).getTime() - new Date(date2).getTime();
-    return Math.ceil(Math.abs(diffInMilliseconds / DAY_UNIT_IN_MILLISECONDS));
+    return Math.floor(Math.abs(diffInMilliseconds / DAY_UNIT_IN_MILLISECONDS));
 }
 
 module.exports = {getDaysDifferenceOfTwoDates, getDaysDifferenceFromToday};

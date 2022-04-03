@@ -60,4 +60,10 @@ async function findById(idContrat) {
     return res;
 }
 
-module.exports = {findById};
+async function getEtatContrat(idContrat) {
+    await client.connect();
+    const res = await db.findOne({"_id": idContrat}, {projection: {"etatContrat": 1}});
+    return res.etatContrat
+}
+
+module.exports = {findById, getEtatContrat};
