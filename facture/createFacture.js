@@ -32,6 +32,16 @@ async function insertFacture(client) {
             idContrat: 3,
             montant: 1500,
             dateFacture: new Date().toISOString()
+        },{
+            _id: 4,
+            idContrat: 20,
+            montant: 1500,
+            dateFacture: new Date("2021-10-27").toISOString()
+        },{
+            _id: 5,
+            idContrat: 21,
+            montant: 2200,
+            dateFacture: new Date("2022-11-06").toISOString()
         }
     ])
 }

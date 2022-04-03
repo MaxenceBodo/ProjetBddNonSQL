@@ -98,6 +98,38 @@ async function insertContratLocation(client) {
                 },
                 etatContrat: "en cours",
                 clauseLocation: "Texte tres long"
+            },{
+                _id: 20,
+                dateDebut: new Date("2021-10-25").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2021-10-27").toISOString(),
+                personne: {
+                    idPersonne: 3,
+                    typePersonne: "physique"
+                },
+                agence: 1,
+                vehicule: {
+                    "SUV": [],
+                    "voiture": [94],
+                    "fourgonettes": [264]
+                },
+                etatContrat: "termine",
+                clauseLocation: "Texte tres long"
+            },{
+                _id: 21,
+                dateDebut: new Date("2021-11-05").toISOString(), //YYYY-mm-dd
+                dateFin: new Date("2022-11-06").toISOString(),
+                personne: {
+                    idPersonne: 3,
+                    typePersonne: "physique"
+                },
+                agence: 1,
+                vehicule: {
+                    "SUV": [48],
+                    "voiture": [],
+                    "fourgonettes": []
+                },
+                etatContrat: "termine",
+                clauseLocation: "Texte tres long"
             }
         ]
     );

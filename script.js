@@ -42,6 +42,7 @@ async function main() {
         await deletePersoPh.deleteAll(client);
         await deleteSociete.deleteAll(client);
         await deleteF.deleteAll(client);
+        
         console.log('\n');
         console.log('\n');
 
@@ -54,6 +55,7 @@ async function main() {
         await createPersMo.insertPersonnesMorales(client);
         await createPersoPh.insertPersonnesPhysiques(client);
         await createSociete.insertSociete(client);
+        await createF.insertFacture(client)
         console.log('\n');
         console.log('\n');
 
@@ -216,7 +218,7 @@ async function profitDeuxDerniersMois(client) {
         {
             '$match': {
                 'dateFacture': {
-                    '$lte': decalageDate(2)
+                    '$gte': decalageDate(2)
                 }
             }
         }, {
