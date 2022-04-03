@@ -216,7 +216,7 @@ async function profitDeuxDerniersMois(client) {
         {
             '$match': {
                 'dateFacture': {
-                    '$lte': decalageDate(2)
+                    '$gte': decalageDate(2)
                 }
             }
         }, {
