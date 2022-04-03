@@ -74,7 +74,27 @@ async function insertPersonnesMorales(client) {
                 adresseComplementaire: ""
             },
             compteBancaire: [6]
-        }]
+        },
+            {
+                _id: 4,
+                SIRET: 434158963100029,
+                nomEntreprise: "ABC",
+                compteEntreprise: "ABC",
+                email: "abc@abc.fr",
+                representantLegal: {
+                    nom: "Maxence",
+                    prenom: "Bodo",
+                    tel: "0646126784"
+                },
+                adresse: {
+                    voie: "RAvenue Clément Ader",
+                    numero: 155,
+                    ville: "Castelnau-le-Lez",
+                    pays: "France",
+                    adresseComplementaire: ""
+                },
+                compteBancaire: [7]
+            }]
     )
 }
 
@@ -89,4 +109,4 @@ async function createPersonne(client, valeur) {
     console.log(`La personne est inserée avec l'id: ${result.insertedId}`);
 }
 
-module.exports = {insertPersonnesMorales}
+module.exports = {insertPersonnesMorales};

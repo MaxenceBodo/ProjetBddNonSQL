@@ -26,7 +26,7 @@ async function insertContratLocation(client) {
                     idPersonne: 1,
                     typePersonne: "morale"
                 },
-                agence: 3,
+                agence: 1,
                 vehicule: {
                     "SUV": [10, 12, 17, 19],
                     "voiture": [],
@@ -42,7 +42,7 @@ async function insertContratLocation(client) {
                     idPersonne: 2,
                     typePersonne: "morale"
                 },
-                agence: 3,
+                agence: 1,
                 vehicule: {
                     "SUV": [45],
                     "voiture": [68],
@@ -90,7 +90,7 @@ async function insertContratLocation(client) {
                     idPersonne: 3,
                     typePersonne: "physique"
                 },
-                agence: 2,
+                agence: 1,
                 vehicule: {
                     "SUV": [],
                     "voiture": [81, 82, 83, 84, 85],

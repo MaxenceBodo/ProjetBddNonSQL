@@ -46,4 +46,4 @@ async function createOneFacture(client, valeur) {
     console.log(`La facture a été inseré -> ${result.insertedId}`);
 }
 
-module.exports = {createOneFacture};
+module.exports = {insertFacture, createOneFacture};

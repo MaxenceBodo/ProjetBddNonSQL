@@ -29,7 +29,7 @@ async function main() {
     }
 }
 
-main().catch(console.dir);
+// main().catch(console.dir);
 
 async function rendreVehicule(client, idContrat) {
     if (await contrat.getEtatContrat(idContrat) === "termine") {
@@ -39,11 +39,11 @@ async function rendreVehicule(client, idContrat) {
 
     let resContrat = await contrat.findById(idContrat);
 
-    console.log(resContrat);
-    let joursDeRetard = await joursDePenalite(idContrat);
+    // console.log(resContrat);
+    let joursDeRetard = await joursDePenalite(client, idContrat);
     if (joursDeRetard !== 0) {
         let penaliteData = {
-            sommePenalite: await calculerPenalite(resContrat, joursDeRetard),
+            sommePenalite: await calculerPenalite(client, resContrat, joursDeRetard),
             joursDeRetard: joursDeRetard,
             idContrat: idContrat
         };
@@ -77,7 +77,7 @@ async function calculerMontantFacture(client, vehicules, nbDeJours) {
 }
 
 
-async function joursDePenalite(idContrat) {
+async function joursDePenalite(client, idContrat) {
     let res = await client.db("location").collection("contratLocation").findOne({
         "_id": idContrat,
         "dateFin": {"$lt": new Date().toISOString()}
@@ -93,7 +93,7 @@ async function joursDePenalite(idContrat) {
 }
 
 //PENALITE = JOURS DE RETARD * TVA DU VEHICULE (pour chaque vehicule)
-async function calculerPenalite(contrat, joursDeRetard) {
+async function calculerPenalite(client, contrat, joursDeRetard) {
     const test = client.db('location').collection('contratLocation').aggregate([
         {
             '$match': {
@@ -155,8 +155,7 @@ async function calculerPenalite(contrat, joursDeRetard) {
 
 }
 
-//TODO: LOUERVEHICULE FUNCTION
-async function louerVehicule(client, idPersonne, typePersonne, vehiculesId, dateDebut, dateFin, idAgence) {
+async function louerVehicule(client, idContrat, idPersonne, typePersonne, vehiculesId, dateDebut, dateFin, idAgence) {
     let checkContrat = await checkIfContratOk(client, idPersonne, typePersonne, vehiculesId, dateDebut, dateFin);
     if (checkContrat.status === "error")
         return checkContrat.message;
@@ -168,7 +167,7 @@ async function louerVehicule(client, idPersonne, typePersonne, vehiculesId, date
     };
     let vehiculesNonLoues = await getVehiculesNonLoue(client, vehiculesId);
 
-    console.log(vehiculesNonLoues);
+    // console.log(vehiculesNonLoues);
 
     vehiculesNonLoues.forEach((res) => {
         if (res.modele.nom === "SUV") vehicules.SUV.push(res._id);
@@ -177,6 +176,7 @@ async function louerVehicule(client, idPersonne, typePersonne, vehiculesId, date
     });
 
     let valeur = {
+        _id: idContrat,
         dateDebut: new Date(dateDebut).toISOString(),
         dateFin: new Date(dateFin).toISOString(),
         dateContrat: new Date().toISOString(),
@@ -249,3 +249,6 @@ async function getVehiculesNonLoue(client, vehicules) {
     });
     return nonLoues;
 }
+
+
+module.exports = {louerVehicule, rendreVehicule};

@@ -25,7 +25,8 @@ async function insertVehicule(client){
             _id: 1,
             nom: "SUV",
             prixJour: 100
-        }
+        },
+        agence: 1
     }])
 }
 
@@ -36,7 +37,6 @@ async function createVehicule(client, valeur) {
 
 async function createVehiculeOne(client, valeur) {
     const result = await client.db("location").collection("vehicule").insertOne(valeur);
-    console.log('insere');
 }
 
 module.exports= {createVehiculeOne};
