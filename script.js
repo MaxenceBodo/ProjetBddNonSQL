@@ -31,8 +31,8 @@ async function main() {
         // Connexion à mongoDBe
         await client.connect();
         //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
-        // console.log("-----------------------------------------")
-        // console.log("Suppression des tables")
+        console.log("-----------------------------------------")
+        console.log("Suppression des tables")
         await deleteV.deleteAll(client);
         await deleteA.deleteAll(client);
         await deleteCB.deleteAll(client);
