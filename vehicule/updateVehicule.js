@@ -38,13 +38,13 @@ async function changeStatusVehicule(id) {
 async function setStatusVehiculeLoue(id) {
     await client.connect();
     let res = await db.updateOne({"_id": id}, {$set: {"etatVehicule": "loue"}});
-    console.log(`${res.modifiedCount} mis a jour`);
+    // console.log(`${res.modifiedCount} mis a jour`);
 }
 
 async function setStatusVehiculeNonLoue(id) {
     await client.connect();
     let res = await db.updateOne({"_id": id}, {$set: {"etatVehicule": "non loue"}});
-    console.log(`${res.modifiedCount} mis a jour`);
+    // console.log(`${res.modifiedCount} mis a jour`);
 }
 
 module.exports = {changeStatusVehicule};
