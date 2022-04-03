@@ -24,12 +24,14 @@ async function insertPenalite(client) {
             {
                 _id: 1,
                 sommePenalite: 5000,
-                joursDeRetard: 2
+                joursDeRetard: 2,
+                idContrat:4
             },
             {
                 _id: 2,
                 sommePenalite: 1000,
-                joursDeRetard: 1
+                joursDeRetard: 1,
+                idContrat:2
             }
         ]
     );

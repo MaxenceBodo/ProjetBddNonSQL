@@ -36,7 +36,7 @@ async function insertFacture(client){
     ])
 }
 
-async function createModele(client, valeur) {
+async function createFacture(client, valeur) {
     const result = await client.db("location").collection("facture").insertMany(valeur);
     console.log(`Les facture ont été inseré`);
 }

@@ -1,4 +1,4 @@
-const {MongoClient} = require("mongodb");
+const { MongoClient } = require("mongodb");
 const uri = "mongodb+srv://sorbonne:1234@location.2tudd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
@@ -30,46 +30,51 @@ async function main() {
         // Connexion à mongoDBe
         await client.connect();
         //Delete toutes les données pour eviter les problèmes lors d'un premier lancement
-        console.log("-----------------------------------------")
-        console.log("Suppression des tables")
-        await deleteV.deleteAll(client);
-        await deleteA.deleteAll(client);
-        await deleteCB.deleteAll(client);
-        await deleteCL.deleteAll(client);
-        await deleteMo.deleteAll(client);
-        await deletePena.deleteAll(client);
-        await deletePersMo.deleteAll(client);
-        await deletePersoPh.deleteAll(client);
-        await deleteSociete.deleteAll(client);
-        await deleteF.deleteAll(client);
-        console.log('\n');
-        console.log('\n');
+        // console.log("-----------------------------------------")
+        // console.log("Suppression des tables")
+        // await deleteV.deleteAll(client);
+        // await deleteA.deleteAll(client);
+        // await deleteCB.deleteAll(client);
+        // // await deleteCL.deleteAll(client);
+        // await deleteMo.deleteAll(client);
+        // await deletePena.deleteAll(client);
+        // await deletePersMo.deleteAll(client);
+        // await deletePersoPh.deleteAll(client);
+        // await deleteSociete.deleteAll(client);
+        // await deleteF.deleteAll(client);
+        // console.log('\n');
+        // console.log('\n');
 
-        //Creation dans la table
-        console.log("-----------------------------------------");
-        console.log("Creation des tables");
-        await ajoutVehicule(client);
-        await createA.insertAgence(client);
-        await createCB.insertComptesBancaires(client);
-        await createCL.insertContratLocation(client);
-        await createMo.insertModele(client);
-            await createPena.insertPenalite(client);
-        await createPersMo.insertPersonnesMorales(client);
-        await createPersoPh.insertPersonnesPhysiques(client);
-        await createSociete.insertSociete(client);
-        await createF.insertFacture(client);
-        console.log('\n');
-        console.log('\n');
+        // //Creation dans la table
+        // console.log("-----------------------------------------");
+        // console.log("Creation des tables");
+        // await ajoutVehicule(client);
+        // await createA.insertAgence(client);
+        // await createCB.insertComptesBancaires(client);
+        // // await createCL.insertContratLocation(client);
+        // await createMo.insertModele(client);
+        //     await createPena.insertPenalite(client);
+        // await createPersMo.insertPersonnesMorales(client);
+        // await createPersoPh.insertPersonnesPhysiques(client);
+        // await createSociete.insertSociete(client);
+        // await createF.insertFacture(client);
+        // console.log('\n');
+        // console.log('\n');
 
         console.log("-----------------------------------------");
-        console.log("Fonction agregation");
+        console.log("Fonction agregation","\n");
 
         console.log("Deux premiers mois");
         await profitDeuxPremiersMois(client);
+        console.log("\n");
 
         console.log("Deux derniers mois");
         await profitDeuxDerniersMois(client);
+        console.log("\n");
 
+        console.log("Cout total");
+        await coutTotal(client, 2);
+        console.log("\n");
 
     } catch (error) {
         console.log(error)
@@ -162,10 +167,10 @@ function choixMarque() {
 
 //Agregation 1 : Permet aux loueurs de pouvoir calculer ses profits cumul´es sur les deux premiers mois.
 async function profitDeuxPremiersMois(client) {
-    const test = client.db('location').collection('contratLocation').aggregate([
+    const test = client.db('location').collection('facture').aggregate([
         {
             '$match': {
-                'dateFin': {
+                'dateFacture': {
                     '$gte': '2021-10-01',
                     '$lte': '2021-11-31'
                 }
@@ -174,36 +179,35 @@ async function profitDeuxPremiersMois(client) {
             '$group': {
                 '_id': 0,
                 'total': {
-                    '$sum': '$montantAPayer'
+                    '$sum': '$montant'
                 }
             }
         }
     ])
-    for await(const doc of test) {
+    for await (const doc of test) {
         console.log(doc);
     }
 }
 
 //Agregation 2 : Permet aux loueurs de pouvoir calculer ses profits cumul´es sur les deux derniers mois.
 async function profitDeuxDerniersMois(client) {
-    console.log(decalageDate(2));
-    const test = client.db('location').collection('contratLocation').aggregate([
+    const test = client.db('location').collection('facture').aggregate([
         {
-            '$match': {
-                'dateFin': {
-                    '$lte': decalageDate(2)
-                }
+          '$match': {
+            'dateFacture': {
+              '$lte': decalageDate(2)
             }
+          }
         }, {
-            '$group': {
-                '_id': 0,
-                'total': {
-                    '$sum': '$montantAPayer'
-                }
+          '$group': {
+            '_id': 0, 
+            'total': {
+              '$sum': '$montant'
             }
+          }
         }
-    ])
-    for await(const doc of test) {
+      ])
+    for await (const doc of test) {
         console.log(doc);
     }
 }
@@ -215,32 +219,72 @@ function decalageDate(decalage) {
 }
 
 
+//Agregation 4 :
 
-async function agregation(client,idLocation){
-  const test1 = client.db('location').collection('contratLocation').find({_id:idLocation},{_id:0,vehicule:1});
-  const priceSUV = await client.db('location').collection('modele').find({nom:"SUV"});
-  const priceVoiture = client.db('location').collection('modele').find({nom:"voiture"});
-  const priceFourgonette = client.db('location').collection('modele').find({nom:"fourgonette"});
+async function coutTotal(client, idContrat) {
+    const test = client.db('location').collection('facture').aggregate([
+        {
+            '$match': {
+                'idContrat': idContrat
+            }
+        },
+        {
+            '$lookup': {
+                'from': 'penalite',
+                'localField': 'idContrat',
+                'foreignField': 'idContrat',
+                'as': 'penalite'
+            }
+        },
+        {
+            '$unwind': {
+                'path': '$penalite',
+                'preserveNullAndEmptyArrays': true
+            }
+        },
+        // {
+        //     '$project':{
+        //         'somme' : '$montant',
+        //         'penalite': {'$ifNull':['$penalite.sommePenalite',0]}
+        //     }
+        // },
+        {
+            "$group": {
+                _id: 0,
+                amount: { $sum: { $add: ['$montant', { $ifNull: ['$penalite.sommePenalite',0] }] } }
+            }
+        }
+    ])
+    for await (const doc of test) {
+        console.log(doc);
+    }
+}
 
-  let listeVoiture;
-  let prixSuv;
-  let prixVoiture;
-  let prixFourgonette;
+async function agregation(client, idLocation) {
+    const test1 = client.db('location').collection('contratLocation').find({ _id: idLocation }, { _id: 0, vehicule: 1 });
+    const priceSUV = await client.db('location').collection('modele').find({ nom: "SUV" });
+    const priceVoiture = client.db('location').collection('modele').find({ nom: "voiture" });
+    const priceFourgonette = client.db('location').collection('modele').find({ nom: "fourgonette" });
 
-  for await(const doc of test1){
-    listeVoiture = doc["vehicule"]
-  }
+    let listeVoiture;
+    let prixSuv;
+    let prixVoiture;
+    let prixFourgonette;
 
-  for await(const doc of priceSUV){
-    prixSuv = doc["prixModele"]
-  }
-  for await(const doc of priceVoiture){
-    prixVoiture = doc["prixModele"]
-  }
-  for await(const doc of priceFourgonette){
-    prixFourgonette = doc["prixModele"]
-  }
+    for await (const doc of test1) {
+        listeVoiture = doc["vehicule"]
+    }
 
-  let totalSansPenalite = listeVoiture["SUV"].length*prixSuv + listeVoiture["voiture"].length*prixVoiture+listeVoiture["fourgonettes"].length*prixFourgonette;
-  console.log("total =", total)
+    for await (const doc of priceSUV) {
+        prixSuv = doc["prixModele"]
+    }
+    for await (const doc of priceVoiture) {
+        prixVoiture = doc["prixModele"]
+    }
+    for await (const doc of priceFourgonette) {
+        prixFourgonette = doc["prixModele"]
+    }
+
+    let totalSansPenalite = listeVoiture["SUV"].length * prixSuv + listeVoiture["voiture"].length * prixVoiture + listeVoiture["fourgonettes"].length * prixFourgonette;
+    console.log("total =", total)
 }
